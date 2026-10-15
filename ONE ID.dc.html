@@ -8,8 +8,8 @@
 <body>
 <x-dc>
 <helmet>
-  <link rel="stylesheet" href="ds/hmp-global-design-system-3643566b-7f0f-4773-bf3d-c3d939031955/styles.css">
-  <script src="ds/hmp-global-design-system-3643566b-7f0f-4773-bf3d-c3d939031955/_ds_bundle.js"></script>
+  <link rel="stylesheet" href="_ds/hmp-global-design-system-3643566b-7f0f-4773-bf3d-c3d939031955/styles.css">
+  <script src="_ds/hmp-global-design-system-3643566b-7f0f-4773-bf3d-c3d939031955/_ds_bundle.js"></script>
   <script src="oneid-data.js"></script>
   <script src="taxonomy.js"></script>
   <style>
@@ -381,7 +381,7 @@ class Component extends DCLogic {
   }
   componentDidMount() {
     this.mounted = true; this.forceUpdate();
-    if (!this.props.embedded) { try { const r = JSON.parse(localStorage.getItem("oneid-review") || "null"); if (r && r.p && this.allPresets().includes(r.p)) this.gotoPreset(r.p, "hmpedu"); } catch (e) {} }
+    if (!this.props.embedded) this.gotoPreset(this.allPresets()[0], "hmpedu");
     this.kd = (ev) => { if (this.props.embedded) return; const tag = (ev.target.tagName || "").toLowerCase(); if (tag === "input" || tag === "textarea" || ev.target.isContentEditable) return; if (ev.key === "ArrowRight") this.step(1); if (ev.key === "ArrowLeft") this.step(-1); };
     document.addEventListener("keydown", this.kd);
     if (this.state.cooldown > 0) this.startCooldown(this.state.cooldown);
