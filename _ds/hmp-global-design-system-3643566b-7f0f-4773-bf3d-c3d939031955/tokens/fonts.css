@@ -1,0 +1,14 @@
+/* Elza — body & utility typeface. Weights used across HMP Global product. */
+@font-face{font-family:"Elza";src:url("../fonts/Elza-Light.woff2") format("woff2");font-weight:300;font-style:normal;font-display:swap}
+@font-face{font-family:"Elza";src:url("../fonts/Elza-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Elza";src:url("../fonts/Elza-Medium.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"Elza";src:url("../fonts/Elza-Semibold.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"Elza";src:url("../fonts/Elza-Bold.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap}
+
+/* Field Gothic Standard — display & header typeface. Numbered weights; 42/43/44 cover most display use. */
+@font-face{font-family:"Field Gothic Standard";src:url("../fonts/FieldGothic-No42.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Field Gothic Standard";src:url("../fonts/FieldGothic-No43.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"Field Gothic Standard";src:url("../fonts/FieldGothic-No44.woff2") format("woff2");font-weight:800;font-style:normal;font-display:swap}
+
+/* Reserved: enlarged circular colon glyph for the "Better Happens:" campaign hero only. */
+@font-face{font-family:"Field Gothic Colon";src:url("../fonts/FieldGothic-No44-COLON.woff2") format("woff2");font-weight:800;font-style:normal;font-display:swap}

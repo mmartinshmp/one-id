@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas">
+  <link rel="stylesheet" href="_ds/hmp-global-design-system-3643566b-7f0f-4773-bf3d-c3d939031955/styles.css">
+  <script src="_ds/hmp-global-design-system-3643566b-7f0f-4773-bf3d-c3d939031955/_ds_bundle.js"></script>
+  <style>
+    html, body, * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-smooth: never; }html, body { margin: 0; background: #e7e5e4; }</style>
+</helmet>
+<div style="padding:64px;display:flex;flex-direction:column;gap:96px;font-family:var(--font-body);color:var(--stone-900);width:max-content">
+  <div style="display:flex;flex-direction:column;gap:8px;max-width:900px">
+    <h1 style="margin:0;font-family:var(--font-body);font-weight:600;font-size:40px;line-height:1.1">HMP Global ONE ID — screen set</h1>
+    <p style="margin:0;font-size:18px;color:var(--stone-600)">Single entry flow: sign in, verify, then route by whether the email already has a ONE ID. Every screen and state at desktop (1440) and mobile (390). Frames are live: fields, dropdowns and buttons work inside each one. Open <a href="ONE ID.dc.html" style="color:var(--cool-600)">ONE ID.dc.html</a> for the click-through prototype and <a href="ONE ID Components.dc.html" style="color:var(--cool-600)">ONE ID Components.dc.html</a> for tokens and specs.</p>
+  </div>
+
+  <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
+    <section data-screen-label="{{ g.title }}" style="display:flex;flex-direction:column;gap:32px">
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <h2 style="margin:0;font-family:var(--font-body);font-weight:600;font-size:30px;line-height:1.1">{{ g.title }}</h2>
+        <p style="margin:0;font-size:16px;color:var(--stone-600)">{{ g.note }}</p>
+      </div>
+      <div style="display:flex;gap:48px;align-items:flex-start">
+        <sc-for list="{{ g.desktop }}" as="f" hint-placeholder-count="2">
+          <div data-screen-label="{{ f.label }}" style="display:flex;flex-direction:column;gap:12px;width:1440px;flex-shrink:0">
+            <div style="display:flex;gap:10px;align-items:baseline;font-size:15px"><span style="font-weight:700">{{ f.code }}</span><span style="color:var(--stone-600)">{{ f.label }}</span><span style="margin-left:auto;font-size:13px;color:var(--stone-500)">1440</span></div>
+            <div style="width:1440px;background:#d6d3d1;border-radius:4px;overflow:hidden;box-shadow:0 1px 3px rgb(23 54 82 / 0.1)">
+              <dc-import name="ONE ID" preset="{{ f.preset }}" theme="{{ f.theme }}" embedded="{{ true }}" hint-size="1440px,800px"></dc-import>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex;gap:40px;align-items:flex-start">
+        <sc-for list="{{ g.mobile }}" as="f" hint-placeholder-count="2">
+          <div data-screen-label="{{ f.label }}" style="display:flex;flex-direction:column;gap:12px;width:390px;flex-shrink:0">
+            <div style="display:flex;gap:10px;align-items:baseline;font-size:15px"><span style="font-weight:700">{{ f.code }}</span><span style="color:var(--stone-600);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ f.label }}</span><span style="margin-left:auto;font-size:13px;color:var(--stone-500)">390</span></div>
+            <div style="width:390px;background:#d6d3d1;border-radius:4px;overflow:hidden;box-shadow:0 1px 3px rgb(23 54 82 / 0.1)">
+              <dc-import name="ONE ID" preset="{{ f.preset }}" theme="{{ f.theme }}" embedded="{{ true }}" hint-size="390px,800px"></dc-import>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+  </sc-for>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const F = (code, preset, label, theme) => ({ code, preset, label, theme: theme || "pvtl365" });
+    const A = [F("Sign In", "signin", "Sign In"), F("Sign Up", "signup", "Sign Up (same screen, switched)"), F("Sign In", "signin-invalid-email", "Invalid email"), F("Sign In", "signin-sending", "Sending code (loading)"), F("Verify", "verify", "Verify Your Email"), F("Verify", "verify-invalid-code", "Invalid code"), F("Verify", "verify-expired-code", "Expired code"), F("Verify", "verify-resent", "Code resent, cooldown"), F("Redirect", "signed-in", "Signed in, redirecting")];
+    const B = [F("Profile", "profile", "Create an Account, empty"), F("Profile", "profile-filled", "United States, filled"), F("Profile", "profile-canada", "Canada: Province"), F("Profile", "profile-other-country", "Other country: free text"), F("Profile", "profile-google-signup", "Prefilled from Google"), F("Profile", "profile-npi", "Prefilled from NPI lookup"), F("Profile", "profile-npi-notfound", "NPI not found"), F("Profile", "profile-invalid-npi", "Invalid NPI"), F("Profile", "profile-errors", "Inline errors + banner"),
+      F("Professional", "professional", "Professional Information, initial"), F("Professional", "professional-hcp-yes", "HCP = Yes, dependents disabled"), F("Professional", "professional-provider-type", "Provider Type chosen"), F("Professional", "professional-npi-prefilled", "Prefilled from NPI lookup"), F("Professional", "professional-classification-chosen", "Classification chosen, Specialization pending"), F("Professional", "professional-specialization-chosen", "Specialization chosen, Yes path complete"), F("Professional", "professional-no-specializations", "Classification with no specializations"), F("Professional", "professional-hcp-no", "HCP = No"), F("Professional", "professional-hcp-no-filled", "HCP = No, filled"), F("Professional", "professional-errors", "Inline errors + banner"),
+      F("Preferences", "preferences", "Preferences"), F("Preferences", "preferences-filled", "Preferences, filled"), F("Redirect", "account-created", "Account created, redirecting")];
+    const T = [F("Sign In", "signin", "Event registration ID button added", "hmpedu"), F("Sign Up", "signup", "Sign up with Event Registration ID", "hmpedu"), F("Sign In", "hmpedu-event-match-offer", "Email matches a recent registration", "hmpedu"), F("Event Sign In", "hmpedu-event-signin", "Registration email + event registration ID", "hmpedu"), F("Event Sign In", "hmpedu-event-signin-invalid-key", "Invalid registration ID format", "hmpedu"), F("Event Sign In", "hmpedu-event-signin-no-match", "No registration found", "hmpedu"), F("Event Sign In", "hmpedu-event-signin-expired", "Access ID expired (over 18 months)", "hmpedu"), F("Profile", "hmpedu-profile-event-prefilled", "Prefilled from event registration", "hmpedu"), F("Professional", "hmpedu-professional-event-prefilled", "Prefilled, Practice Setting empty", "hmpedu"), F("Professional", "hmpedu-professional-event-missing-setting", "Practice Setting required error", "hmpedu")];
+    return { groups: [
+      { title: "Entry — Sign In and verify", note: "One entry for everyone. After the code is verified, existing ONE IDs go straight to the site; new emails continue into account creation. No progress indicator here.", desktop: A, mobile: A },
+      { title: "Account creation — new emails only", note: "Reached automatically after verification when the email has no ONE ID (or after Google sign-in with a new address). Three steps: Profile, Professional, Preferences.", desktop: B, mobile: B },
+      { title: "HMP Education — Event Sign In (theme-only flow)", note: "Only themes flagged eventLogin show the event registration ID button. Attendees skip the one-time code: registration email + event registration ID prefills Profile and Professional from their event record. Practice Setting is the one field they must still complete.", desktop: T, mobile: T }
+    ] };
+  }
+}
+</script>
+</body>
+</html>

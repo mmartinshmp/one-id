@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/hmp-global-design-system-3643566b-7f0f-4773-bf3d-c3d939031955/styles.css">
+  <script src="_ds/hmp-global-design-system-3643566b-7f0f-4773-bf3d-c3d939031955/_ds_bundle.js"></script>
+  <script src="oneid-data.js"></script>
+  <script src="taxonomy.js"></script>
+  <style>
+    html, body, * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-smooth: never; }
+    html, body { margin: 0; min-height: 100%; background: #d6d3d1; }
+    a { color: var(--brand-ink, #891847); }
+    a:hover { color: var(--brand-hover, #6E1339); }
+    button:focus-visible, a:focus-visible, input:focus-visible, [role="radio"]:focus-visible { outline: 3px solid var(--brand, #891847); outline-offset: 2px; }
+    @font-face { font-family: "Field Gothic XWide"; src: url("assets/fieldgothic-no83.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+    @keyframes oneid-spin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation-duration: 0.01ms !important; } #oneid-about { clip-path: none !important; } }
+  </style>
+</helmet>
+<div ref="{{ rootRef }}" data-screen-label="{{ screenLabel }}" data-preset="{{ screenLabel }}" style="min-height: {{ L.minH }};background:#d6d3d1;font-family:var(--font-body);color:var(--stone-900);display:flex;flex-direction:column;align-items:center;box-sizing:border-box;--brand: {{ t.brand }};--brand-hover: {{ t.brandHover }};--brand-tint: {{ t.brandTint }};--brand-ink: {{ t.brandInk }};--on-brand: {{ t.onBrand }};--primary: {{ t.brand }};--primary-foreground: {{ t.onBrand }};--ring: {{ t.brand }};--link: {{ t.brandInk }};--link-hover: {{ t.brandHover }};--accent: {{ t.brandTint }};--accent-foreground: {{ t.brandInk }};padding: {{ L.pagePad }}">
+  <sc-if value="{{ showReview }}" hint-placeholder-val="{{ false }}">
+    <div role="toolbar" aria-label="Review controls" style="position:fixed;top:0;left:0;right:0;z-index:50;box-sizing:border-box;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:16px;font-family:var(--font-body);pointer-events:none">
+      <div role="group" aria-label="Brand" style="display:flex;gap:8px;pointer-events:auto">
+        <button type="button" onClick="{{ rv.pickEdu }}" aria-pressed="{{ rv.isEdu }}" style="{{ rv.eduStyle }}">HMP Education (Event login option)</button>
+        <button type="button" onClick="{{ rv.pickPvtl }}" aria-pressed="{{ rv.isPvtl }}" style="{{ rv.pvtlStyle }}">PVTL365</button>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;min-width:0;pointer-events:auto">
+        <span style="font-size:16px;font-weight:500;color:var(--stone-600);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60vw"><span style="color:var(--stone-900);font-weight:600">{{ rv.index }}</span> / {{ rv.total }}<span style="{{ rv.nameStyle }}">{{ rv.name }}</span></span>
+        <div style="display:flex;gap:8px">
+        <button type="button" onClick="{{ rv.prev }}" disabled="{{ rv.atStart }}" aria-label="Previous screen" style="{{ rv.prevStyle }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <button type="button" onClick="{{ rv.next }}" disabled="{{ rv.atEnd }}" style="{{ rv.nextStyle }}">Next<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+  <main data-screen-label="{{ screenLabel }}" style="width:100%;max-width:680px;background:#fff;border-radius:0;box-shadow:0 24px 64px -16px rgb(23 54 82 / 0.14), 0 2px 6px rgb(23 54 82 / 0.04);box-sizing:border-box;position:relative;display:flex;flex-direction:column">
+    <header style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px">
+      <div style="padding: {{ L.headPad }};min-width:0;flex:1"><div role="img" aria-label="{{ t.name }}" style="{{ logoStyle }}"></div></div>
+      <button type="button" ref="{{ tabRef }}" onClick="{{ openAbout }}" onMouseEnter="{{ tabHoverOn }}" onMouseLeave="{{ tabHoverOff }}" aria-expanded="{{ about }}" aria-controls="oneid-about" aria-label="What is HMP Global ONE ID?" style="{{ tabStyle }}">
+        <span style="padding: {{ L.tabPad }};display:flex;align-items:center"><span role="img" aria-label="HMP Global ONE ID" style="{{ oneIdLogoStyle }}"></span></span>
+        <span aria-hidden="true" style="{{ tabChevronStyle }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="{{ chevStyle }}"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+      </button>
+    </header>
+    <div id="oneid-about" ref="{{ aboutRef }}" role="dialog" aria-modal="false" aria-labelledby="oneid-about-title" onKeyDown="{{ aboutKey }}" style="{{ aboutStyle }}">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div id="oneid-about-title" role="img" aria-label="HMP Global ONE ID" style="{{ aboutLogoStyle }}"></div>
+        <button type="button" ref="{{ closeRef }}" onClick="{{ closeAbout }}" onMouseEnter="{{ closeHoverOn }}" onMouseLeave="{{ closeHoverOff }}" aria-label="Close" style="{{ closeStyle }}">
+          <span style="padding: {{ L.tabPad }};display:flex;align-items:center;font-family:'Field Gothic XWide', var(--font-display);font-weight:500;font-size:14px;line-height:1;letter-spacing:0;color:#8B97A4">CLOSE</span>
+          <span aria-hidden="true" style="{{ closeXStyle }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
+        </button>
+      </div>
+      <div style="{{ aboutBodyStyle }}">
+        <p style="margin:0;font-family:var(--font-display);font-weight:400;font-size: {{ L.aboutText }};line-height:1.08;letter-spacing:0;color:#173652;max-width:17.5em;text-wrap:pretty">One account for every HMP Global brand. Your ONE ID works across HMP Global’s learning networks, publications and events, so you sign in once and your profile and preferences come with you. Create it once, use it everywhere.</p>
+        <div style="display:flex;flex-direction:column;gap:2px;font-family:var(--font-display);font-size: {{ L.aboutText }};line-height:1.08;color:#173652">
+          <span style="font-weight:600">Questions or need help?</span>
+          <a href="https://www.hmpglobal.com/contact-us" target="_blank" rel="noopener noreferrer" style="color:#173652;text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1.5px;align-self:flex-start;min-height:44px;display:inline-flex;align-items:flex-start">Contact us</a>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:24px;padding: {{ L.bodyPad }}">
+      <sc-if value="{{ showProgress }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;font-family:var(--font-body);font-size:14px">
+            <span style="font-weight:600;font-size:13px;letter-spacing:0.04em;text-transform:uppercase;color:var(--brand-ink);white-space:nowrap;flex-shrink:0">Step {{ stepN }} of 3</span>
+          </div>
+          <x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Progress" value="{{ stepPct }}" aria-label="Account creation progress" hint-size="100%,8px"></x-import>
+        </div>
+      </sc-if>
+      <sc-if value="{{ showTitle }}" hint-placeholder-val="{{ true }}"><div style="{{ L.titleRow }}">
+        <h1 style="margin:0;font-family:var(--font-body);font-weight:600;font-size: {{ L.h1 }};line-height:1.15;letter-spacing:-0.01em;color:var(--stone-900);flex-shrink:0">{{ title }}</h1>
+        <sc-if value="{{ support }}" hint-placeholder-val="{{ false }}"><p style="{{ L.supportStyle }}">{{ support }}</p></sc-if>
+      </div></sc-if>
+      <sc-if value="{{ banner }}" hint-placeholder-val="{{ false }}">
+        <div role="alert" style="display:flex;gap:10px;align-items:flex-start;padding:14px 16px;border-radius:8px;border:1px solid var(--destructive);background:color-mix(in oklab, var(--destructive) 7%, white);color:var(--stone-900);font-size:15px;line-height:1.45;font-weight:500">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--destructive)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          <span>{{ banner }}</span>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ is.email }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ submitEmail }}" noValidate="{{ true }}" style="display:flex;flex-direction:column;gap:18px">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <label for="email" style="font-weight:500;font-size:16px;line-height:1.3;display:flex;gap:1px">Email address<span aria-hidden="true" style="color:var(--stone-600);font-weight:400">*</span></label>
+            <div style="--input: {{ bc.email }}"><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Input" dc-props="{{ ip.email }}" hint-size="100%,46px"></x-import></div>
+            <sc-if value="{{ e.email }}" hint-placeholder-val="{{ false }}"><div id="email-err" role="alert" style="display:flex;gap:6px;align-items:flex-start;font-size:15px;line-height:1.4;color:var(--destructive);font-weight:600;margin:2px 0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg><span>{{ e.email }}</span></div></sc-if>
+          </div>
+          <div style="{{ L.entryRow }}">
+            <p style="margin:0;font-size:16px;line-height:1.4;font-weight:500;color:var(--stone-500);display:flex;align-items:center;gap:6px;min-height:44px;flex-wrap:wrap;justify-content: {{ L.switchJustify }}">{{ switchPrompt }}<a href="#" onClick="{{ switchMode }}" style="font-weight:600;color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;display:inline-flex;align-items:center;min-height:44px">{{ switchLink }}</a></p>
+            <x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Button" type="submit" dc-props="{{ bp.primary }}" hint-size="140px,46px">{{ continueLabel }}{{ chevronOrSpinner }}</x-import>
+          </div>
+          <sc-if value="{{ showAlt }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;align-items:center;gap:12px;color:var(--stone-500);font-size:14px"><span style="flex:1;height:1px;background:var(--stone-300)"></span>or<span style="flex:1;height:1px;background:var(--stone-300)"></span></div>
+          </sc-if>
+          <sc-if value="{{ showEvent }}" hint-placeholder-val="{{ false }}">
+            <x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Button" type="button" dc-props="{{ bp.event }}" hint-size="100%,50px">{{ eventLabel }}</x-import>
+          </sc-if>
+          <sc-if value="{{ showGoogle }}" hint-placeholder-val="{{ true }}">
+            <x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Button" type="button" dc-props="{{ bp.google }}" hint-size="100%,50px"><svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true" style="flex-shrink:0"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path></svg>{{ googleLabel }}</x-import>
+          </sc-if>
+        </form>
+      </sc-if>
+
+      <sc-if value="{{ is.eventOffer }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:18px">
+          <p style="margin:0;font-size:18px;line-height:1.45;font-weight:500;color:var(--stone-500)">The email <span style="color:#000">{{ v.email }}</span> is linked to a recent HMP Global event registration. {{ offerSentence }}</p>
+          <div style="{{ L.btnRow }}">
+            <x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Button" type="button" dc-props="{{ bp.back }}" hint-size="120px,46px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>Back</x-import>
+            <div style="{{ L.offerBtns }}">
+              <x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Button" type="button" dc-props="{{ bp.offerCode }}" hint-size="190px,46px">{{ offerCodeLabel }}{{ offerCodeIcon }}</x-import>
+              <x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Button" type="button" dc-props="{{ bp.offerId }}" hint-size="220px,46px">Use my registration ID{{ chev }}</x-import>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ is.event }}" hint-placeholder-val="{{ false }}">
+        <form onSubmit="{{ submitEvent }}" noValidate="{{ true }}" style="display:flex;flex-direction:column;gap:18px">
+          <p style="margin:0;font-size:16px;line-height:1.5;font-weight:500;color:var(--stone-500)">Use the email and registration ID from your HMP Global event registration.</p>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <label for="evEmail" style="font-weight:500;font-size:16px;line-height:1.3;display:flex;gap:1px">Registration email<span aria-hidden="true" style="color:var(--stone-600);font-weight:400">*</span></label>
+            <div style="--input: {{ bc.evEmail }}"><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Input" dc-props="{{ ip.evEmail }}" hint-size="100%,46px"></x-import></div>
+            <sc-if value="{{ e.evEmail }}" hint-placeholder-val="{{ false }}"><div id="evEmail-err" role="alert" style="display:flex;gap:6px;align-items:flex-start;font-size:15px;line-height:1.4;color:var(--destructive);font-weight:600;margin:2px 0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg><span>{{ e.evEmail }}</span></div></sc-if>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <label for="badge" style="font-weight:500;font-size:16px;line-height:1.3;display:flex;gap:1px">Registration ID<span aria-hidden="true" style="color:var(--stone-600);font-weight:400">*</span></label>
+            <div style="--input: {{ bc.badge }}"><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Input" dc-props="{{ ip.badge }}" hint-size="100%,46px"></x-import></div>
+            <sc-if value="{{ e.badge }}" hint-placeholder-val="{{ false }}"><div id="badge-err" role="alert" style="display:flex;gap:6px;align-items:flex-start;font-size:15px;line-height:1.4;color:var(--destructive);font-weight:600;margin:2px 0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg><span>{{ e.badge }}</span></div></sc-if>
+            <sc-if value="{{ eventNoMatch }}" hint-placeholder-val="{{ false }}"><div style="font-size:15px;line-height:1.45;font-weight:500;color:var(--stone-500);margin:2px 0;display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center"><sc-if value="{{ eventRecoveryPrompt }}" hint-placeholder-val="{{ false }}"><span>{{ eventRecoveryPrompt }}</span></sc-if><a href="#" onClick="{{ eventUseEmail }}" style="font-weight:600;color:inherit;text-decoration:underline;text-underline-offset:3px">{{ eventRecoveryLink }}</a><span>or</span><a href="https://www.hmpglobal.com/contact-us" target="_blank" rel="noopener noreferrer" style="font-weight:600;color:inherit;text-decoration:underline;text-underline-offset:3px">contact support</a></div></sc-if>
+            <sc-if value="{{ showBadgeHelp }}" hint-placeholder-val="{{ true }}"><div id="badge-help" style="font-size:15px;line-height:1.45;font-weight:500;color:var(--stone-500);margin:2px 0">Found in your registration confirmation email or printed on your event badge.</div></sc-if>
+          </div>
+          <div style="{{ L.btnRow }}">
+            <x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Button" type="button" dc-props="{{ bp.back }}" hint-size="120px,46px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>Back</x-import>
+            <x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Button" type="submit" dc-props="{{ bp.primary }}" hint-size="200px,46px">{{ eventSubmitLabel }}{{ chevronOrSpinner }}</x-import>
+          </div>
+        </form>
+      </sc-if>
+
+      <sc-if value="{{ is.verify }}" hint-placeholder-val="{{ false }}">
+        <form onSubmit="{{ submitCode }}" noValidate="{{ true }}" style="display:flex;flex-direction:column;gap:18px">
+          <p style="margin:0;font-size:16px;line-height:1.5;font-weight:500;color:var(--stone-500)">We sent a one-time code to <span style="color:#000">{{ v.email }}</span>. It expires in 15 minutes.</p>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <label for="code" style="font-weight:500;font-size:16px;line-height:1.3;display:flex;gap:1px">Sign-in code<span aria-hidden="true" style="color:var(--stone-600);font-weight:400">*</span></label>
+            <div style="--input: {{ bc.code }}"><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Input" dc-props="{{ ip.code }}" hint-size="100%,46px"></x-import></div>
+            <sc-if value="{{ e.code }}" hint-placeholder-val="{{ false }}"><div id="code-err" role="alert" style="display:flex;gap:6px;align-items:flex-start;font-size:15px;line-height:1.4;color:var(--destructive);font-weight:600;margin:2px 0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg><span>{{ e.code }}</span></div></sc-if>
+          </div>
+          <div style="display:flex;align-items:center;gap:4px;font-size:15px;font-weight:500;min-height:24px;flex-wrap:wrap">
+            <sc-if value="{{ codeNote }}" hint-placeholder-val="{{ false }}"><span role="status" style="display:inline-flex;align-items:center;gap:6px;color:var(--stone-500);font-weight:600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>{{ codeNote }}</span></sc-if>
+            <sc-if value="{{ canResend }}" hint-placeholder-val="{{ true }}"><span style="color:var(--stone-500)">Didn’t get it?</span><button type="button" onClick="{{ resend }}" style="background:none;border:0;padding:0;min-height:24px;font-family:var(--font-body);font-size:15px;font-weight:600;color:var(--stone-500);text-decoration:underline;text-underline-offset:3px;cursor:pointer">Resend code</button></sc-if>
+            <sc-if value="{{ cooling }}" hint-placeholder-val="{{ false }}"><span aria-live="polite" style="color:var(--stone-500)">Resend available in {{ cooldown }}s</span></sc-if>
+          </div>
+          <div style="{{ L.btnRow }}">
+            <x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Button" type="button" dc-props="{{ bp.back }}" hint-size="120px,46px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>Back</x-import>
+            <x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Button" type="submit" dc-props="{{ bp.primary }}" hint-size="140px,46px">{{ continueLabel }}{{ chevronOrSpinner }}</x-import>
+          </div>
+        </form>
+      </sc-if>
+
+      <sc-if value="{{ is.B3 }}" hint-placeholder-val="{{ false }}">
+        <form onSubmit="{{ submitB3 }}" noValidate="{{ true }}" style="display:flex;flex-direction:column;gap:18px">
+          <sc-if value="{{ eventMatched }}" hint-placeholder-val="{{ false }}"><div role="status" style="display:inline-flex;align-self:flex-start;max-width:100%;gap:8px;align-items:center;padding:12px 14px;border-radius:8px;background:var(--stone-100);font-size:15px;line-height:1.45;font-weight:500;color:var(--stone-500)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Matched your registration for <span style="color:#000">{{ eventName }}</span>. Edit any details below.</span></div></sc-if>
+          <sc-if value="{{ google }}" hint-placeholder-val="{{ false }}"><div role="status" style="display:inline-flex;align-self:flex-start;max-width:100%;gap:8px;align-items:center;padding:12px 14px;border-radius:8px;background:var(--stone-100);font-size:15px;line-height:1.45;font-weight:500;color:var(--stone-500)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><polyline points="20 6 9 17 4 12"></polyline></svg><span>You’re signed in with Google as <span style="color:#000">{{ v.email }}</span>.</span></div></sc-if>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <label for="npi" style="font-weight:500;font-size:16px;line-height:1.3">NPI Number</label>
+            <div id="npi-help" style="font-size:16px;line-height:1.5;font-weight:500;color:var(--stone-500);margin:2px 0">Have an NPI? Enter it and we’ll fill in your details.</div>
+            <div style="display:flex;gap:10px;align-items:flex-start">
+              <div style="flex:1;min-width:0;--input: {{ bc.npi }}"><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Input" dc-props="{{ ip.npiLookup }}" hint-size="100%,46px"></x-import></div>
+              <x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Button" type="button" dc-props="{{ bp.lookup }}" hint-size="110px,46px">{{ lookupLabel }}</x-import>
+            </div>
+            <sc-if value="{{ e.npi }}" hint-placeholder-val="{{ false }}"><div id="npi-err" role="alert" style="display:flex;gap:6px;align-items:flex-start;font-size:15px;line-height:1.4;color:var(--destructive);font-weight:600;margin:2px 0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg><span>{{ e.npi }}</span></div></sc-if>
+            <sc-if value="{{ npiIdle }}" hint-placeholder-val="{{ true }}"><div style="font-size:15px;line-height:1.45;font-weight:500;color:var(--stone-500);margin:2px 0">Don’t know your NPI?&nbsp;&nbsp;<a href="https://npiregistry.cms.hhs.gov/search" target="_blank" rel="noopener noreferrer" style="font-weight:600;color:inherit;text-decoration:underline;text-underline-offset:3px">Find it in the Registry</a></div></sc-if>
+            <sc-if value="{{ npiFound }}" hint-placeholder-val="{{ false }}"><div role="status" style="display:flex;gap:8px;align-items:flex-start;font-size:15px;line-height:1.45;font-weight:500;color:var(--stone-500);margin:2px 0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Matched <span style="color:#000">{{ npiName }}</span> in the NPI Registry. Edit any details below.</span></div></sc-if>
+          </div>
+          <div style="height:1px;background:var(--stone-300);margin:6px 0"></div>
+          <div style="{{ L.twoCol }}">
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <label for="first" style="font-weight:500;font-size:16px;line-height:1.3;display:flex;gap:1px">First Name<span aria-hidden="true" style="color:var(--stone-600);font-weight:400">*</span></label>
+              <div style="--input: {{ bc.first }}"><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Input" dc-props="{{ ip.first }}" hint-size="100%,46px"></x-import></div>
+              <sc-if value="{{ e.first }}" hint-placeholder-val="{{ false }}"><div id="first-err" role="alert" style="display:flex;gap:6px;align-items:flex-start;font-size:15px;line-height:1.4;color:var(--destructive);font-weight:600;margin:2px 0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg><span>{{ e.first }}</span></div></sc-if>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <label for="last" style="font-weight:500;font-size:16px;line-height:1.3;display:flex;gap:1px">Last Name<span aria-hidden="true" style="color:var(--stone-600);font-weight:400">*</span></label>
+              <div style="--input: {{ bc.last }}"><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Input" dc-props="{{ ip.last }}" hint-size="100%,46px"></x-import></div>
+              <sc-if value="{{ e.last }}" hint-placeholder-val="{{ false }}"><div id="last-err" role="alert" style="display:flex;gap:6px;align-items:flex-start;font-size:15px;line-height:1.4;color:var(--destructive);font-weight:600;margin:2px 0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg><span>{{ e.last }}</span></div></sc-if>
+            </div>
+          </div>
+          <dc-import name="OneIdSelect" field-id="country" label="Country" options="{{ countries }}" selected="{{ v.country }}" on-change="{{ set.country }}" searchable="{{ true }}" placeholder="Select a country" hint-size="100%,80px"></dc-import>
+          <div style="{{ L.twoCol }}">
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <label for="city" style="font-weight:500;font-size:16px;line-height:1.3">City</label>
+              <div style="--input: {{ bc.city }}"><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Input" dc-props="{{ ip.city }}" hint-size="100%,46px"></x-import></div>
+            </div>
+            <sc-if value="{{ stateIsSelect }}" hint-placeholder-val="{{ true }}">
+              <dc-import name="OneIdSelect" field-id="state" label="{{ stateLabel }}" options="{{ stateOptions }}" selected="{{ v.state }}" on-change="{{ set.state }}" searchable="{{ true }}" placeholder="{{ statePlaceholder }}" hint-size="100%,80px"></dc-import>
+            </sc-if>
+            <sc-if value="{{ stateIsText }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <label for="state" style="font-weight:500;font-size:16px;line-height:1.3">State, Province or Region</label>
+                <div style="--input: {{ bc.state }}"><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Input" dc-props="{{ ip.state }}" hint-size="100%,46px"></x-import></div>
+              </div>
+            </sc-if>
+          </div>
+          <div style="{{ L.twoCol }}">
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <label for="zip" style="font-weight:500;font-size:16px;line-height:1.3">ZIP / Postal Code</label>
+              <div style="--input: {{ bc.zip }}"><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Input" dc-props="{{ ip.zip }}" hint-size="100%,46px"></x-import></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <label for="phone" style="font-weight:500;font-size:16px;line-height:1.3">Phone Number</label>
+              <div style="--input: {{ bc.phone }}"><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Input" dc-props="{{ ip.phone }}" hint-size="100%,46px"></x-import></div>
+              <sc-if value="{{ e.phone }}" hint-placeholder-val="{{ false }}"><div id="phone-err" role="alert" style="display:flex;gap:6px;align-items:flex-start;font-size:15px;line-height:1.4;color:var(--destructive);font-weight:600;margin:2px 0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg><span>{{ e.phone }}</span></div></sc-if>
+              <div role="group" aria-label="Phone type" style="display:flex;gap:20px;flex-wrap:wrap;margin-top:4px">
+                <label style="display:flex;align-items:center;gap:8px;min-height:44px;font-size:15px;cursor:pointer;--input:var(--stone-400)"><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Checkbox" aria-label="Home" checked="{{ v.ptHome }}" on-change="{{ set.ptHome }}" dc-props="{{ cbp }}" hint-size="20px,20px"></x-import>Home</label>
+                <label style="display:flex;align-items:center;gap:8px;min-height:44px;font-size:15px;cursor:pointer;--input:var(--stone-400)"><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Checkbox" aria-label="Work" checked="{{ v.ptWork }}" on-change="{{ set.ptWork }}" dc-props="{{ cbp }}" hint-size="20px,20px"></x-import>Work</label>
+                <label style="display:flex;align-items:center;gap:8px;min-height:44px;font-size:15px;cursor:pointer;--input:var(--stone-400)"><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Checkbox" aria-label="Mobile" checked="{{ v.ptMobile }}" on-change="{{ set.ptMobile }}" dc-props="{{ cbp }}" hint-size="20px,20px"></x-import>Mobile</label>
+              </div>
+            </div>
+          </div>
+          <label style="display:flex;align-items:flex-start;gap:12px;box-sizing:border-box;padding:12px 16px;border-radius:8px;background:var(--stone-50);--input:var(--stone-400);font-size:15px;line-height:1.45;font-weight:500;color:var(--stone-500);margin:2px 0;cursor:pointer">
+            <span style="display:flex;align-items:center;height:22px"><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Checkbox" aria-label="I agree to receive promotional texts" checked="{{ v.smsConsent }}" on-change="{{ set.smsConsent }}" dc-props="{{ cbp }}" hint-size="20px,20px"></x-import></span>
+            <span>I agree to receive promotional texts. Message and data rates may apply.</span>
+          </label>
+          <div style="{{ L.btnRow }}">
+            <x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Button" type="button" dc-props="{{ bp.back }}" hint-size="120px,46px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>Back</x-import>
+            <x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Button" type="submit" dc-props="{{ bp.primary }}" hint-size="140px,46px">Continue{{ chevronOrSpinner }}</x-import>
+          </div>
+        </form>
+      </sc-if>
+
+      <sc-if value="{{ is.B4 }}" hint-placeholder-val="{{ false }}">
+        <form onSubmit="{{ submitB4 }}" noValidate="{{ true }}" style="display:flex;flex-direction:column;gap:18px">
+          <sc-if value="{{ eventMatched }}" hint-placeholder-val="{{ false }}"><div role="status" style="display:inline-flex;align-self:flex-start;max-width:100%;gap:8px;align-items:center;padding:12px 14px;border-radius:8px;background:var(--stone-100);font-size:15px;line-height:1.45;font-weight:500;color:var(--stone-500)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Matched your registration for <span style="color:#000">{{ eventName }}</span>. Edit any details below.</span></div></sc-if>
+          <dc-import name="OneIdSelect" field-id="hcp" label="Are you a licensed Healthcare Provider?" required="{{ true }}" options="{{ yesNo }}" selected="{{ v.hcp }}" on-change="{{ set.hcp }}" error-text="{{ e.hcp }}" placeholder="Select Yes or No" hint-size="100%,80px"></dc-import>
+          <sc-if value="{{ hcpYes }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:18px;padding:20px 24px;border-radius:10px;background:var(--stone-50);border:1px solid var(--stone-300)">
+              <sc-if value="{{ hasNpi }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;justify-content:flex-start;align-items:center;gap:10px;font-size:16px;line-height:1.3;color:var(--stone-500);font-weight:500">
+                  <span>NPI Number</span>
+                  <span style="display:flex;align-items:center;gap:8px"><span style="color:var(--stone-900);letter-spacing:0.04em">{{ v.npi }}</span><sc-if value="{{ npiFound }}" hint-placeholder-val="{{ false }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></sc-if></span>
+                </div>
+              </sc-if>
+              <dc-import name="OneIdSelect" field-id="ptype" label="Provider Type" required="{{ true }}" options="{{ providerTypes }}" selected="{{ v.ptype }}" on-change="{{ set.ptype }}" error-text="{{ e.ptype }}" searchable="{{ true }}" placeholder="Select a provider type" hint-size="100%,80px"></dc-import>
+              <dc-import name="OneIdSelect" field-id="cls" label="Classification" required="{{ true }}" options="{{ classifications }}" selected="{{ v.cls }}" on-change="{{ set.cls }}" error-text="{{ e.cls }}" is-disabled="{{ clsDisabled }}" searchable="{{ true }}" placeholder="{{ clsPlaceholder }}" hint-size="100%,80px"></dc-import>
+              <dc-import name="OneIdSelect" field-id="spec" label="Specialization" required="{{ specRequired }}" options="{{ specializations }}" selected="{{ specValue }}" on-change="{{ set.spec }}" error-text="{{ e.spec }}" is-disabled="{{ specDisabled }}" placeholder="{{ specPlaceholder }}" helper="{{ specHelper }}" hint-size="100%,80px"></dc-import>
+            </div>
+          </sc-if>
+          <sc-if value="{{ hcpNo }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:18px;padding:20px 24px;border-radius:10px;background:var(--stone-50);border:1px solid var(--stone-300)">
+              <dc-import name="OneIdSelect" field-id="mgmt" label="Management Level" required="{{ true }}" options="{{ managementLevels }}" selected="{{ v.mgmt }}" on-change="{{ set.mgmt }}" error-text="{{ e.mgmt }}" placeholder="Select a level" hint-size="100%,80px"></dc-import>
+              <dc-import name="OneIdSelect" field-id="area" label="Area of Responsibility" required="{{ true }}" options="{{ areas }}" selected="{{ v.area }}" on-change="{{ set.area }}" error-text="{{ e.area }}" placeholder="Select an area" hint-size="100%,80px"></dc-import>
+            </div>
+          </sc-if>
+          <dc-import name="OneIdSelect" field-id="setting" label="Practice Setting" required="{{ true }}" options="{{ practiceSettings }}" selected="{{ v.setting }}" on-change="{{ set.setting }}" error-text="{{ e.setting }}" searchable="{{ true }}" placeholder="Search or select a setting" hint-size="100%,80px"></dc-import>
+          <div style="{{ L.btnRow }}">
+            <x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Button" type="button" dc-props="{{ bp.back }}" hint-size="120px,46px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>Back</x-import>
+            <x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Button" type="submit" dc-props="{{ bp.primary }}" hint-size="140px,46px">{{ finishLabel }}{{ chevronOrSpinner }}</x-import>
+          </div>
+        </form>
+      </sc-if>
+
+      <sc-if value="{{ is.B5 }}" hint-placeholder-val="{{ false }}">
+        <form onSubmit="{{ submitB5 }}" noValidate="{{ true }}" style="display:flex;flex-direction:column;gap:32px">
+          <fieldset style="border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:12px">
+            <legend style="padding:0;font-weight:500;font-size:16px;line-height:1.3;margin-bottom:4px">What are you most interested in?</legend>
+            <div role="radiogroup" aria-label="Primary interest" style="{{ L.radioGrid }}">
+              <sc-for list="{{ topics }}" as="r" hint-placeholder-count="4">
+                <label style="display:flex;align-items:center;gap:12px;min-height:44px;padding:0 4px;font-size:15px;line-height:1.3;cursor:pointer">
+                  <span role="radio" tabindex="0" aria-checked="{{ r.checked }}" onClick="{{ r.pick }}" onKeyDown="{{ r.key }}" style="{{ r.style }}"><sc-if value="{{ r.checked }}" hint-placeholder-val="{{ false }}"><span style="width:10px;height:10px;border-radius:50%;background:var(--brand)"></span></sc-if></span>
+                  <span>{{ r.label }}</span>
+                </label>
+              </sc-for>
+            </div>
+          </fieldset>
+          <div style="{{ L.twoCol }}">
+            <dc-import name="OneIdSelect" field-id="credential" label="Primary reason for joining" options="{{ prefOpts.credential }}" selected="{{ v.credential }}" on-change="{{ set.credential }}" placeholder="Select one" hint-size="100%,80px"></dc-import>
+            <dc-import name="OneIdSelect" field-id="experience" label="Years in practice" options="{{ prefOpts.experience }}" selected="{{ v.experience }}" on-change="{{ set.experience }}" placeholder="Select one" hint-size="100%,80px"></dc-import>
+            <dc-import name="OneIdSelect" field-id="format" label="Preferred content format" options="{{ prefOpts.format }}" selected="{{ v.format }}" on-change="{{ set.format }}" placeholder="Select one" hint-size="100%,80px"></dc-import>
+            <dc-import name="OneIdSelect" field-id="frequency" label="Email frequency" options="{{ prefOpts.frequency }}" selected="{{ v.frequency }}" on-change="{{ set.frequency }}" placeholder="Select one" hint-size="100%,80px"></dc-import>
+          </div>
+          <div style="height:1px;background:var(--stone-300)"></div>
+          <div style="{{ L.twoCol }}">
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <label for="nabp" style="font-weight:500;font-size:16px;line-height:1.3">NABP e-Profile ID</label>
+              <div style="--input: {{ bc.nabp }}"><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Input" dc-props="{{ ip.nabp }}" hint-size="100%,46px"></x-import></div>
+              <div id="nabp-help" style="font-size:15px;line-height:1.45;font-weight:500;color:var(--stone-500);margin:2px 0">Pharmacists only. Needed to report credits to CPE Monitor.</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <label for="dob" style="font-weight:500;font-size:16px;line-height:1.3">Date of birth (MM/DD)</label>
+              <div style="--input: {{ bc.dob }}"><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Input" dc-props="{{ ip.dob }}" hint-size="100%,46px"></x-import></div>
+              <div id="dob-help" style="font-size:15px;line-height:1.45;font-weight:500;color:var(--stone-500);margin:2px 0">Used with your NABP ID for credit reporting.</div>
+              <sc-if value="{{ e.dob }}" hint-placeholder-val="{{ false }}"><div id="dob-err" role="alert" style="display:flex;gap:6px;align-items:flex-start;font-size:15px;line-height:1.4;color:var(--destructive);font-weight:600;margin:2px 0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg><span>{{ e.dob }}</span></div></sc-if>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <label for="license" style="font-weight:500;font-size:16px;line-height:1.3">License number</label>
+              <div style="--input: {{ bc.license }}"><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Input" dc-props="{{ ip.license }}" hint-size="100%,46px"></x-import></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <label for="employer" style="font-weight:500;font-size:16px;line-height:1.3">Organization or employer</label>
+              <div style="--input: {{ bc.employer }}"><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Input" dc-props="{{ ip.employer }}" hint-size="100%,46px"></x-import></div>
+            </div>
+          </div>
+          <div style="{{ L.btnRow }}">
+            <x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Button" type="button" dc-props="{{ bp.back }}" hint-size="120px,46px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>Back</x-import>
+            <x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Button" type="submit" dc-props="{{ bp.primary }}" hint-size="180px,46px">{{ saveLabel }}{{ chevronOrSpinner }}</x-import>
+          </div>
+        </form>
+      </sc-if>
+
+      <sc-if value="{{ is.done }}" hint-placeholder-val="{{ false }}">
+        <div role="status" aria-live="polite" style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:8px 0 16px;text-align:center">
+          <span style="width:56px;height:56px;border-radius:50%;background:var(--brand-tint);display:flex;align-items:center;justify-content:center;margin-bottom:8px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--brand-ink)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+          <p style="margin:0;font-size: {{ L.h1 }};line-height:1.15;font-weight:600;letter-spacing:-0.01em;color:var(--stone-900)">{{ doneText }}</p>
+          <p style="margin:8px 0 0;font-size:16px;font-weight:500;color:var(--stone-500);min-height:44px;display:inline-flex;align-items:center;gap:6px">Not redirected? <a href="#" style="font-weight:600;color:var(--stone-500);text-decoration:underline;text-underline-offset:3px">Continue to the site</a></p>
+        </div>
+      </sc-if>
+    </div>
+  </main>
+  <nav aria-label="Legal and help" style="display:flex;gap:28px;justify-content:center;flex-wrap:wrap;padding:24px 16px 8px;font-size:14px">
+    <a href="https://www.hmpglobal.com/about-us/privacy-policy" target="_blank" rel="noopener noreferrer" style="color:var(--stone-600);text-decoration:underline;text-decoration-color:transparent;text-underline-offset:4px;transition:text-decoration-color .2s ease;min-height:44px;display:inline-flex;align-items:center" style-hover="text-decoration-color:var(--stone-600)">Privacy Policy</a>
+    <a href="https://www.hmpglobal.com/about-us/terms-of-use" target="_blank" rel="noopener noreferrer" style="color:var(--stone-600);text-decoration:underline;text-decoration-color:transparent;text-underline-offset:4px;transition:text-decoration-color .2s ease;min-height:44px;display:inline-flex;align-items:center" style-hover="text-decoration-color:var(--stone-600)">Terms</a>
+    <a href="https://www.hmpglobal.com/contact-us" target="_blank" rel="noopener noreferrer" style="color:var(--stone-600);text-decoration:underline;text-decoration-color:transparent;text-underline-offset:4px;transition:text-decoration-color .2s ease;min-height:44px;display:inline-flex;align-items:center" style-hover="text-decoration-color:var(--stone-600)">Help</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;hmpedu&quot;,&quot;options&quot;:[&quot;hmpedu&quot;,&quot;pvtl365&quot;],&quot;tsType&quot;:&quot;'hmpedu' | 'pvtl365'&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;preset&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;signin&quot;,&quot;options&quot;:[&quot;signin&quot;,&quot;signup&quot;,&quot;signin-invalid-email&quot;,&quot;hmpedu-event-match-offer&quot;,&quot;hmpedu-event-signin&quot;,&quot;hmpedu-event-signin-invalid-key&quot;,&quot;hmpedu-event-signin-no-match&quot;,&quot;hmpedu-event-signin-expired&quot;,&quot;signin-sending&quot;,&quot;verify&quot;,&quot;verify-invalid-code&quot;,&quot;verify-expired-code&quot;,&quot;verify-resent&quot;,&quot;signed-in&quot;,&quot;profile&quot;,&quot;profile-npi&quot;,&quot;hmpedu-profile-event-prefilled&quot;,&quot;profile-google-signup&quot;,&quot;profile-npi-notfound&quot;,&quot;profile-invalid-npi&quot;,&quot;profile-filled&quot;,&quot;profile-canada&quot;,&quot;profile-other-country&quot;,&quot;profile-errors&quot;,&quot;professional&quot;,&quot;hmpedu-professional-event-prefilled&quot;,&quot;hmpedu-professional-event-missing-setting&quot;,&quot;professional-npi-prefilled&quot;,&quot;professional-hcp-yes&quot;,&quot;professional-provider-type&quot;,&quot;professional-classification-chosen&quot;,&quot;professional-specialization-chosen&quot;,&quot;professional-no-specializations&quot;,&quot;professional-hcp-no&quot;,&quot;professional-hcp-no-filled&quot;,&quot;professional-errors&quot;,&quot;preferences&quot;,&quot;preferences-filled&quot;,&quot;account-created&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Prototype&quot;}}">
+class Component extends DCLogic {
+  constructor(p) { super(p); this.rootRef = React.createRef(); this.tabRef = React.createRef(); this.closeRef = React.createRef(); this.aboutRef = React.createRef(); this.state = this.initial(p.preset); }
+  base() {
+    return { screen: "A1", mode: "signin", m: false, rvTheme: null, rvPreset: null, about: false, ht: false, hc: false, npiStatus: "idle", npiName: "", event: false, eventName: "", eventNoMatch: false, loading: false, banner: null, codeNote: null, cooldown: 0, google: false, e: {},
+      v: { email: "", code: "", first: "", last: "", country: "United States", city: "", state: "", zip: "", phone: "", ptHome: false, ptWork: false, ptMobile: false, smsConsent: false, evEmail: "", badge: "", hcp: "", npi: "", ptype: "", cls: "", spec: "", mgmt: "", area: "", setting: "", topic: "", nabp: "", dob: "", license: "", employer: "", credential: "", experience: "", format: "", frequency: "" } };
+  }
+  initial(preset) {
+    const s = this.base(); const v = s.v; const su = () => { v.email = v.email || "new.user@vascularlab.org"; };
+    const TT = "Technologists, Technicians & Other Technical Service Providers";
+    const ev = () => { s.event = true; s.eventName = "SAWC Fall 2026"; Object.assign(v, { email: "maya.okafor@mercyhealth.org", evEmail: "maya.okafor@mercyhealth.org", badge: "48219300", npi: "1234567893", first: "Maya", last: "Okafor", city: "Philadelphia", state: "Pennsylvania", zip: "19103", phone: "(215) 555-0142", ptWork: true, hcp: "Yes", ptype: TT, cls: "Radiologic Technologist", spec: "Vascular Sonography" }); };
+    const P = {
+      "signin": () => {}, "signup": () => { s.mode = "signup"; }, "signin-invalid-email": () => { v.email = "mike.hmpglobal"; s.e = { email: "Enter a valid email address, like name@hospital.org." }; },
+      "signin-sending": () => { v.email = "m.okafor@vascularlab.org"; s.loading = true; },
+      "verify": () => { s.screen = "A2"; v.email = "m.okafor@vascularlab.org"; },
+      "verify-invalid-code": () => { s.screen = "A2"; v.email = "m.okafor@vascularlab.org"; v.code = "48151623"; s.e = { code: "That code isn’t right. Check the email and try again." }; },
+      "verify-expired-code": () => { s.screen = "A2"; v.email = "m.okafor@vascularlab.org"; v.code = "20394481"; s.e = { code: "This code has expired. Resend a new code to continue." }; },
+      "verify-resent": () => { s.screen = "A2"; v.email = "m.okafor@vascularlab.org"; s.codeNote = "A new code was sent."; s.cooldown = 30; },
+      "signed-in": () => { s.screen = "A3"; },
+            "profile": () => { su(); s.screen = "B3"; },
+      "profile-filled": () => { su(); s.screen = "B3"; Object.assign(v, { first: "Maya", last: "Okafor", city: "Philadelphia", state: "Pennsylvania", zip: "19103", phone: "(215) 555-0142", ptMobile: true }); },
+      "profile-canada": () => { su(); s.screen = "B3"; Object.assign(v, { first: "Maya", last: "Okafor", country: "Canada", city: "Toronto", state: "Ontario", zip: "M5V 2T6" }); },
+      "profile-other-country": () => { su(); s.screen = "B3"; Object.assign(v, { first: "Maya", last: "Okafor", country: "United Kingdom", city: "Leeds", state: "West Yorkshire", zip: "LS1 4AP" }); },
+      "profile-google-signup": () => { su(); s.screen = "B3"; s.google = true; Object.assign(v, { email: "maya.okafor@gmail.com", first: "Maya", last: "Okafor" }); },
+      "profile-errors": () => { su(); s.screen = "B3"; v.phone = "12"; s.e = { first: "Enter your first name.", last: "Enter your last name.", phone: "Enter a phone number with at least 7 digits." }; s.banner = "Fix the 3 highlighted fields to continue."; },
+      "profile-npi": () => { su(); s.screen = "B3"; s.npiStatus = "found"; s.npiName = "Maya Okafor"; Object.assign(v, { npi: "1234567893", first: "Maya", last: "Okafor", city: "Philadelphia", state: "Pennsylvania", zip: "19103", hcp: "Yes", ptype: TT, cls: "Radiologic Technologist", spec: "Vascular Sonography" }); },
+      "profile-npi-notfound": () => { su(); s.screen = "B3"; v.npi = "9876543210"; s.e = { npi: "No match for that NPI. Check the number or enter your details below." }; },
+      "professional": () => { su(); s.screen = "B4"; },
+      "professional-hcp-yes": () => { su(); s.screen = "B4"; v.hcp = "Yes"; },
+      "professional-provider-type": () => { su(); s.screen = "B4"; v.hcp = "Yes"; v.ptype = TT; },
+      "professional-npi-prefilled": () => { su(); s.screen = "B4"; v.hcp = "Yes"; v.npi = "1234567893"; s.npiStatus = "found"; v.ptype = TT; v.cls = "Radiologic Technologist"; v.spec = "Vascular Sonography"; },
+      "professional-classification-chosen": () => { su(); s.screen = "B4"; v.hcp = "Yes"; v.ptype = TT; v.cls = "Specialist/Technologist Cardiovascular"; },
+      "professional-specialization-chosen": () => { su(); s.screen = "B4"; v.hcp = "Yes"; v.ptype = TT; v.cls = "Specialist/Technologist Cardiovascular"; v.spec = "Vascular Specialist"; v.setting = "Hospital"; },
+      "professional-no-specializations": () => { su(); s.screen = "B4"; v.hcp = "Yes"; v.ptype = TT; v.cls = "Perfusionist"; },
+      "professional-hcp-no": () => { su(); s.screen = "B4"; v.hcp = "No"; },
+      "professional-hcp-no-filled": () => { su(); s.screen = "B4"; v.hcp = "No"; v.mgmt = "Director"; v.area = "Clinical"; v.setting = "Hospital"; },
+      "profile-invalid-npi": () => { su(); s.screen = "B3"; v.npi = "12345"; s.e = { npi: "Enter a valid 10-digit NPI number." }; },
+      "professional-errors": () => { su(); s.screen = "B4"; v.hcp = "Yes"; s.e = { ptype: "Select a provider type.", setting: "Select a practice setting." }; s.banner = "Fix the 2 highlighted fields to continue."; },
+      "preferences": () => { su(); s.screen = "B5"; },
+      "preferences-filled": () => { su(); s.screen = "B5"; Object.assign(v, { topic: "Continuing education and credits", credential: "Earn CE / CME credits", experience: "3–5 years", format: "On-demand video", frequency: "Weekly", nabp: "483921", dob: "06/14", employer: "Mercy Health" }); },
+      "account-created": () => { su(); s.screen = "B6"; },
+      "hmpedu-event-match-offer": () => { s.screen = "E0"; v.email = "maya.okafor@mercyhealth.org"; },
+      "hmpedu-event-signin": () => { s.screen = "E1"; },
+      "hmpedu-event-signin-invalid-key": () => { s.screen = "E1"; v.evEmail = "maya.okafor@mercyhealth.org"; v.badge = "48213"; s.e = { badge: "Enter the 8-digit registration ID from your confirmation email." }; },
+      "hmpedu-event-signin-no-match": () => { s.screen = "E1"; v.evEmail = "maya.okafor@mercyhealth.org"; v.badge = "90001234"; s.eventNoMatch = true; s.e = { badge: "We couldn’t find a match. Check your email and registration ID and try again." }; },
+      "hmpedu-event-signin-expired": () => { s.screen = "E1"; v.evEmail = "maya.okafor@mercyhealth.org"; v.badge = "80001234"; s.eventNoMatch = "expired"; s.e = { badge: "This registration ID has expired. Registration IDs are valid for up to 18 months." }; },
+      "hmpedu-profile-event-prefilled": () => { s.screen = "B3"; ev(); },
+      "hmpedu-professional-event-prefilled": () => { s.screen = "B4"; ev(); },
+      "hmpedu-professional-event-missing-setting": () => { s.screen = "B4"; ev(); s.e = { setting: "Select a practice setting." }; }
+    };
+    (P[preset] || P.signin)(); return s;
+  }
+  componentDidMount() {
+    this.mounted = true; this.forceUpdate();
+    if (!this.props.embedded) { try { const r = JSON.parse(localStorage.getItem("oneid-review") || "null"); if (r && r.p && this.allPresets().includes(r.p)) this.gotoPreset(r.p, r.t); } catch (e) {} }
+    this.kd = (ev) => { if (this.props.embedded) return; const tag = (ev.target.tagName || "").toLowerCase(); if (tag === "input" || tag === "textarea" || ev.target.isContentEditable) return; if (ev.key === "ArrowRight") this.step(1); if (ev.key === "ArrowLeft") this.step(-1); };
+    document.addEventListener("keydown", this.kd);
+    if (this.state.cooldown > 0) this.startCooldown(this.state.cooldown);
+    this.ro = new ResizeObserver(([en]) => { const m = en.contentRect.width < 640; if (m !== this.state.m) this.setState({ m }); });
+    if (this.rootRef.current) this.ro.observe(this.rootRef.current);
+    const ensure = (src, g) => { if (window[g] || document.querySelector('script[src$="' + src + '"]')) return; const sc = document.createElement("script"); sc.src = src; document.head.appendChild(sc); };
+    let tries = 0;
+    this.poll = setInterval(() => { tries++; if (window.ONEID_DATA && window.NPPES_TAXONOMY) { clearInterval(this.poll); this.forceUpdate(); } else if (tries === 4) { ensure("oneid-data.js", "ONEID_DATA"); ensure("taxonomy.js", "NPPES_TAXONOMY"); } else if (tries > 60) clearInterval(this.poll); }, 250);
+  }
+  componentDidUpdate(pp) {
+    if (pp.preset === this.props.preset && pp.theme === this.props.theme) return;
+    if (this.props.preset === this.state.rvPreset && (this.props.theme === this.state.rvTheme || pp.theme === this.props.theme)) return;
+    clearInterval(this.cd); const st = this.initial(this.props.preset);
+    const tid = this.props.embedded ? null : (this.props.theme || this.state.rvTheme || "hmpedu");
+    this.setState({ ...st, m: this.state.m, rvTheme: tid, rvPreset: this.props.embedded ? null : this.props.preset }, () => { if (st.cooldown > 0) this.startCooldown(st.cooldown); });
+  }
+  componentWillUnmount() { document.removeEventListener("keydown", this.kd); this.ro && this.ro.disconnect(); clearTimeout(this.t); clearInterval(this.cd); clearInterval(this.poll); }
+  data() { return window.ONEID_DATA || { countries: [], usStates: [], caProvinces: [], managementLevels: [], areas: [], practiceSettings: [], topics: [], prefs: [], themes: {} }; }
+  activePreset() { return this.state.rvPreset || this.props.preset || "signin"; }
+  presetList(themeId) { const all = this.allPresets(); return themeId === "hmpedu" ? all : all.filter(p => !/^hmpedu-/.test(p)); }
+  allPresets() { try { const sc = document.querySelector("script[data-dc-script]"); return Object.keys(JSON.parse(sc.getAttribute("data-props")).preset ? {} : {}).length ? [] : JSON.parse(sc.getAttribute("data-props")).preset.options; } catch (e) { return ["signin"]; } }
+  gotoPreset(p, themeId) { clearInterval(this.cd); const st = this.initial(p); this.setState({ ...st, m: this.state.m, rvTheme: themeId, rvPreset: p }, () => { if (st.cooldown > 0) this.startCooldown(st.cooldown); try { localStorage.setItem("oneid-review", JSON.stringify({ t: themeId, p })); } catch (e) {} try { if (window.__dcSetProps && window.__dcRootName) window.__dcSetProps(window.__dcRootName(), { preset: p, theme: themeId }); } catch (e) {} }); }
+  theme() { const d = this.data().themes || {}; if (this.state.rvTheme && d[this.state.rvTheme] && !/^hmpedu-/.test(this.activePreset())) return d[this.state.rvTheme]; if (/^hmpedu-/.test(this.activePreset()) && d.hmpedu) return d.hmpedu; return (this.props.embedded ? d[this.props.theme] : (this.state.rvTheme ? d[this.state.rvTheme] : d.hmpedu)) || d.hmpedu || d.pvtl365 || { name: "PVTL365", logo: "assets/pvtl365-logo.svg", brand: "#891847", brandHover: "#6E1339", brandTint: "#F7EDF1", brandInk: "#891847", onBrand: "#fff" }; }
+  setV(k, val) {
+    this.setState(s => {
+      const v = { ...s.v, [k]: val }, e = { ...s.e }; delete e[k];
+      if (k === "country" && val !== s.v.country) v.state = "";
+      if (k === "npi") return { v, e, npiStatus: "idle", npiName: "" };
+      if (k === "badge" || k === "evEmail") return { v, e, eventNoMatch: false, banner: null };
+      if (k === "ptype") { v.cls = ""; v.spec = ""; delete e.cls; delete e.spec; }
+      if (k === "cls") { v.spec = ""; delete e.spec; }
+      if (k === "hcp") { delete e.ptype; delete e.cls; delete e.spec; delete e.mgmt; delete e.area; }
+      return { v, e, banner: Object.keys(e).length ? s.banner : null };
+    });
+  }
+  go(screen, extra) { clearTimeout(this.t); this.setState({ screen, e: {}, banner: null, loading: false, codeNote: null, ...(extra || {}) }); }
+  fail(e) {
+    const n = Object.keys(e).length;
+    this.setState({ e, banner: n > 1 ? `Fix the ${n} highlighted fields to continue.` : null });
+    setTimeout(() => { const first = document.getElementById(Object.keys(e)[0]); first && first.focus(); }, 30);
+  }
+  load(next) { this.setState({ loading: true }); this.t = setTimeout(() => { this.setState({ loading: false }); next(); }, 900); }
+  startCooldown(from) { clearInterval(this.cd); this.setState({ cooldown: from || 30 }); this.cd = setInterval(() => { this.setState(s => { if (s.cooldown <= 1) { clearInterval(this.cd); return { cooldown: 0 }; } return { cooldown: s.cooldown - 1 }; }); }, 1000); }
+  spinner(color) { return React.createElement("span", { key: "sp", "aria-hidden": "true", style: { width: 18, height: 18, borderRadius: "50%", border: "2.5px solid " + color, borderTopColor: "transparent", animation: "oneid-spin .8s linear infinite", display: "inline-block", flexShrink: 0, marginLeft: 4 } }); }
+  renderVals() {
+    const s = this.state, v = s.v, e = s.e, m = s.m, t = this.theme(), D = this.data();
+    const sc = s.screen;
+    const isEmail = sc === "A1", isVerify = sc === "A2", isDone = sc === "A3" || sc === "B6";
+    const TAX = window.NPPES_TAXONOMY || {};
+    const providerTypes = Object.keys(TAX);
+    const classifications = v.ptype && TAX[v.ptype] ? Object.keys(TAX[v.ptype]) : [];
+    const specList = v.ptype && v.cls && TAX[v.ptype] && TAX[v.ptype][v.cls] ? TAX[v.ptype][v.cls] : null;
+    const specNone = Array.isArray(specList) && specList.length === 0;
+    const specializations = specNone ? ["None"] : (specList || []);
+    const inputBase = { height: 46, borderRadius: 6, fontSize: 16, fontWeight: 500, padding: "0 16px", width: "100%" };
+    const field = (k, extra) => ({ id: k, name: k, value: v[k], onChange: (ev) => this.setV(k, ev.target.value), style: inputBase, "aria-invalid": e[k] ? "true" : undefined, "aria-describedby": [extra && extra.help, e[k] ? k + "-err" : null].filter(Boolean).join(" ") || undefined, ...(extra || {}), help: undefined });
+    const bcOf = (k) => e[k] ? "var(--destructive)" : "var(--stone-400)";
+    const keys = ["email", "code", "first", "last", "city", "state", "zip", "phone", "npi", "evEmail", "badge", "nabp", "dob", "license", "employer"];
+    const bc = {}; keys.forEach(k => bc[k] = bcOf(k));
+    const ip = {
+      email: field("email", { type: "email", autoComplete: "email", inputMode: "email", placeholder: "name@hospital.org", disabled: s.loading }),
+      code: field("code", { type: "text", inputMode: "numeric", autoComplete: "one-time-code", placeholder: "8-digit code", maxLength: 8, disabled: s.loading, style: { ...inputBase, letterSpacing: v.code ? "0.18em" : "normal", fontWeight: v.code ? 600 : 500 } }),
+      first: field("first", { autoComplete: "given-name" }), last: field("last", { autoComplete: "family-name" }),
+      city: field("city", { autoComplete: "address-level2" }), state: field("state", { autoComplete: "address-level1" }),
+      zip: field("zip", { autoComplete: "postal-code" }), phone: field("phone", { type: "tel", autoComplete: "tel", inputMode: "tel" }),
+      npi: field("npi", { inputMode: "numeric", maxLength: 10, placeholder: "10 digits", help: "npi-help" }),
+      evEmail: field("evEmail", { type: "email", autoComplete: "email", inputMode: "email", placeholder: "name@hospital.org", disabled: s.loading }),
+      badge: field("badge", { inputMode: "numeric", maxLength: 8, placeholder: "8-digit number", help: "badge-help", disabled: s.loading, style: { ...inputBase, letterSpacing: v.badge ? "0.08em" : "normal" } }),
+      nabp: field("nabp", { inputMode: "numeric", placeholder: "6-digit number", help: "nabp-help" }),
+      dob: field("dob", { inputMode: "numeric", placeholder: "MM/DD", maxLength: 5, help: "dob-help", autoComplete: "bday" }),
+      license: field("license", { placeholder: "" }), employer: field("employer", { autoComplete: "organization" }),
+      npiLookup: field("npi", { inputMode: "numeric", maxLength: 10, placeholder: "10-digit number", help: "npi-help", disabled: s.npiStatus === "loading", onKeyDown: (ev) => { if (ev.key === "Enter") { ev.preventDefault(); this.lookupNpi(); } } })
+    };
+    const btn = { height: 46, borderRadius: 8, fontSize: 16, fontWeight: 600, padding: "0 24px", fontFamily: "var(--font-body)", gap: 8 };
+    const bp = {
+      primary: { disabled: s.loading, "aria-busy": s.loading ? "true" : undefined, onMouseEnter: () => this.setState({ hp: true }), onMouseLeave: () => this.setState({ hp: false }), style: { ...btn, minWidth: 150, padding: "0 16px 0 24px", gap: 6, background: s.hp && !s.loading ? "color-mix(in oklab, var(--brand) 80%, black)" : "var(--brand)", transition: "background-color .2s ease", width: m ? "100%" : undefined } },
+      back: { onClick: () => this.back(), disabled: s.loading, onMouseEnter: () => this.setState({ hb: true }), onMouseLeave: () => this.setState({ hb: false }), style: { ...btn, padding: "0 24px 0 16px", gap: 6, color: s.hb ? "var(--stone-700)" : "var(--stone-500)", borderColor: "var(--stone-300)", background: s.hb ? "var(--stone-100)" : "#fff", transition: "background-color .2s ease, border-color .2s ease, color .2s ease", width: m ? "100%" : undefined } },
+      lookup: { onClick: () => this.lookupNpi(), disabled: s.npiStatus === "loading" || !v.npi, "aria-busy": s.npiStatus === "loading" ? "true" : undefined, variant: "outline", style: { ...btn, padding: "0 24px", flexShrink: 0, color: "var(--brand-ink)", borderColor: "var(--brand-ink)", background: "#fff" } },
+      offerId: { onClick: () => this.go("E1", { v: { ...v, evEmail: v.email } }), disabled: s.loading, onMouseEnter: () => this.setState({ hp: true }), onMouseLeave: () => this.setState({ hp: false }), style: { ...btn, padding: "0 16px 0 24px", gap: 6, background: s.hp && !s.loading ? "color-mix(in oklab, var(--brand) 80%, black)" : "var(--brand)", transition: "background-color .2s ease", width: m ? "100%" : undefined } },
+      offerCode: { onClick: () => this.load(() => this.go("A2")), disabled: s.loading, onMouseEnter: () => this.setState({ hb2: true }), onMouseLeave: () => this.setState({ hb2: false }), variant: "outline", style: { ...btn, color: s.hb2 ? "var(--stone-700)" : "var(--stone-500)", borderColor: "var(--stone-300)", background: s.hb2 ? "var(--stone-100)" : "#fff", transition: "background-color .2s ease, color .2s ease", width: m ? "100%" : undefined } },
+      event: { onClick: () => this.go("E1"), disabled: s.loading, onMouseEnter: () => this.setState({ he: true }), onMouseLeave: () => this.setState({ he: false }), style: { ...btn, height: 50, width: "100%", color: "#1F1F1F", borderColor: "#747775", background: s.he ? "var(--stone-100)" : "#fff", transition: "background-color .2s ease" } },
+      google: { onClick: () => this.google(), disabled: s.loading, onMouseEnter: () => this.setState({ hg: true }), onMouseLeave: () => this.setState({ hg: false }), style: { ...btn, height: 50, width: "100%", color: "#1F1F1F", borderColor: "#747775", background: s.hg ? "var(--stone-100)" : "#fff", transition: "background-color .2s ease", gap: 12 } }
+    };
+    const titles = { A1: s.mode === "signup" ? "Sign Up" : "Sign In", E0: s.mode === "signup" ? "Sign Up" : "Sign In", E1: "Event Sign In", A2: "Verify Your Email", B3: "Create an Account", B4: "Professional Information", B5: "Preferences", A3: "Sign In", B6: "Create an Account" };
+    const supports = { A1: "ONE ID. One account for every HMP Global brand." };
+    const step = { B3: 1, B4: 2, B5: 3 }[sc];
+    const stateIsSelect = v.country === "United States" || v.country === "Canada";
+    const chev = React.createElement("svg", { key: "c", width: 20, height: 20, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 2.5, strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true" }, React.createElement("polyline", { points: "9 18 15 12 9 6" }));
+    const radioStyle = (on) => ({ width: 22, height: 22, borderRadius: "50%", flexShrink: 0, boxSizing: "border-box", border: (on ? "2px solid var(--brand)" : "1.5px solid var(--stone-400)"), background: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", cursor: "pointer" });
+    const prefOpts = {}; (D.prefs || []).forEach(p => prefOpts[p.key] = p.options);
+    const set = {}; ["country", "state", "hcp", "ptype", "cls", "spec", "mgmt", "area", "setting", "credential", "experience", "format", "frequency"].forEach(k => set[k] = (val) => this.setV(k, val));
+    ["ptHome", "ptWork", "ptMobile", "smsConsent"].forEach(k => set[k] = (val) => this.setV(k, val));
+    return {
+      npiFound: s.npiStatus === "found", npiName: s.npiName, npiIdle: s.npiStatus !== "found" && !e.npi, hasNpi: !!v.npi, lookupLabel: s.npiStatus === "loading" ? "Looking up" : "Look up",
+      showReview: !this.props.embedded, rv: this.reviewVals(t, m), screenLabel: t.id + " · " + this.activePreset(),
+      rootRef: this.rootRef, t, logoStyle: { height: m ? 32 : 40, width: "100%", maxWidth: m ? 160 : 210, backgroundImage: "url(\"" + t.logo + "\")", backgroundSize: "contain", backgroundRepeat: "no-repeat", backgroundPosition: "left top" }, screen: sc, v, e, bc, ip, bp, set, prefOpts, google: s.google,
+      cbp: { style: { width: 20, height: 20, borderRadius: 4 } },
+      aboutBodyStyle: { padding: m ? "32px 20px 28px" : "48px 32px 40px", display: "flex", flexDirection: "column", gap: 22, opacity: s.about ? 1 : 0, transform: s.about ? "none" : "translateY(18px)", transition: s.about ? "opacity .45s ease .35s, transform .55s cubic-bezier(.2,.7,.2,1) .35s" : "none" },
+      about: s.about, tabRef: this.tabRef, closeRef: this.closeRef, aboutRef: this.aboutRef,
+      openAbout: () => this.openAbout(), closeAbout: () => this.closeAbout(), aboutKey: (ev) => { if (ev.key === "Escape") { ev.preventDefault(); this.closeAbout(); } },
+      tabHoverOn: () => this.setState({ ht: true }), tabHoverOff: () => this.setState({ ht: false }), closeHoverOn: () => this.setState({ hc: true }), closeHoverOff: () => this.setState({ hc: false }),
+      tabStyle: { display: "flex", alignItems: "stretch", padding: 0, border: 0, background: s.ht ? "#E1F3FB" : "#ECF8FE", cursor: "pointer", flexShrink: 0, fontFamily: "inherit", transition: "background-color .2s ease" },
+      tabChevronStyle: { display: "flex", alignItems: "center", justifyContent: "center", width: m ? 36 : 42, borderLeft: "1px solid #D3DAE1", color: "var(--stone-500)" },
+      chevStyle: { transform: s.ht ? "translateY(2px)" : "none", transition: "transform .2s ease" },
+      aboutStyle: { position: "absolute", inset: 0, overflow: "hidden", background: "#ECF8FE", zIndex: 20, display: "flex", flexDirection: "column", clipPath: s.about ? "circle(150% at 100% 0)" : "circle(0% at 100% 0)", transition: "clip-path .5s cubic-bezier(.2,.7,.2,1), visibility 0s linear " + (s.about ? "0s" : ".5s"), visibility: s.about ? "visible" : "hidden", pointerEvents: s.about ? "auto" : "none" },
+      closeStyle: { display: "flex", alignItems: "stretch", padding: 0, border: 0, background: s.hc ? "#E1F3FB" : "transparent", cursor: "pointer", fontFamily: "inherit", transition: "background-color .2s ease" },
+      closeXStyle: { display: "flex", alignItems: "center", justifyContent: "center", width: m ? 36 : 42, borderLeft: "1px solid #D3DAE1", borderBottom: "1px solid #D3DAE1", boxSizing: "border-box", color: "var(--stone-500)" },
+      aboutLogoStyle: { opacity: s.about ? 1 : 0, transform: s.about ? "none" : "translateY(14px)", transition: s.about ? "opacity .4s ease .25s, transform .5s cubic-bezier(.2,.7,.2,1) .25s" : "none", margin: m ? "24px 0 0 20px" : "30px 0 0 32px", height: m ? 18 : 24, width: m ? 194 : 259, flexShrink: 0, backgroundImage: "url(\"assets/oneid-logo.svg\")", backgroundSize: "contain", backgroundRepeat: "no-repeat", backgroundPosition: "left center" },
+      oneIdLogoStyle: { height: m ? 12 : 16, width: m ? 130 : 173, backgroundImage: "url(\"assets/oneid-logo.svg\")", backgroundSize: "contain", backgroundRepeat: "no-repeat", backgroundPosition: "center" },
+      L: { titleRow: { display: "flex", flexDirection: m ? "column" : "row", alignItems: m ? "flex-start" : "stretch", gap: m ? 10 : 0, marginBottom: 16 },
+        supportStyle: m ? { margin: 0, fontSize: 16, lineHeight: 1.5, fontWeight: 500, color: "var(--stone-500)" } : { margin: "-12px 0", padding: "16px 0 16px 18px", borderLeft: "1px solid var(--stone-300)", marginLeft: 18, display: "flex", alignItems: "center", fontSize: 17, lineHeight: 1.4, fontWeight: 500, color: "var(--stone-500)" },
+        aboutPad: m ? "40px 20px 32px" : "64px 32px 48px", aboutText: m ? "22px" : "27px", tabPad: m ? "16px 16px 16px 20px" : "22px 26px 22px 32px", minH: this.props.embedded ? "auto" : "100vh", pagePad: this.props.embedded ? (m ? "16px 12px 24px" : "56px 24px 40px") : (m ? "112px 12px 24px" : "112px 24px 40px"), headPad: m ? "24px 0 0 20px" : "36px 0 0 40px", bodyPad: m ? "40px 20px 24px" : "64px 40px 40px", logoH: m ? "30px" : (t.id === "oln" ? "48px" : "40px"), h1: m ? "26px" : "30px",
+        twoCol: { display: "grid", gridTemplateColumns: m ? "1fr" : "1fr 1fr", gap: m ? 16 : "18px 24px", alignItems: "start" },
+        switchJustify: m ? "center" : "flex-start", entryRow: { display: "flex", flexDirection: m ? "column-reverse" : "row", alignItems: m ? "stretch" : "center", justifyContent: "space-between", gap: m ? 4 : 16, textAlign: m ? "center" : "left" },
+        btnRow: { display: "flex", flexDirection: m ? "column-reverse" : "row", justifyContent: "space-between", gap: 12, paddingTop: 8 },
+        offerBtns: { display: "flex", flexDirection: m ? "column-reverse" : "row", gap: 12 },
+        radioGrid: { display: "grid", gridTemplateColumns: m ? "1fr" : "1fr 1fr", gap: "0 24px" } },
+      is: { email: isEmail, eventOffer: sc === "E0", event: sc === "E1", verify: isVerify, B3: sc === "B3", B4: sc === "B4", B5: sc === "B5", done: isDone },
+      title: titles[sc], support: supports[sc], banner: s.banner, showProgress: !!step, stepN: step, stepLabel: ["", "Profile", "Professional", "Preferences"][step] || "", stepPct: step ? Math.round(step / 3 * 100) : 0,
+      showGoogle: true, showEvent: !!t.eventLogin, showAlt: true,
+      offerSentence: s.mode === "signup" ? "Use your event registration ID to sign up and we’ll fill in your details, or continue with a one-time code." : "Use your event registration ID to sign in, or continue with a one-time code.", offerCodeLabel: s.loading ? "Emailing code" : "Email me a code", offerCodeIcon: s.loading ? this.spinner("currentColor") : null, chev,
+      eventLabel: s.mode === "signup" ? "Sign up with Event Registration ID" : "Continue with Event Registration ID",
+      eventSubmitLabel: s.loading ? "Finding" : "Find my registration", eventMatched: s.event, eventName: s.eventName, eventNoMatch: !!s.eventNoMatch,
+      eventRecoveryPrompt: s.eventNoMatch === "expired" ? "" : "Still stuck?", eventRecoveryLink: s.eventNoMatch === "expired" ? (s.mode === "signup" ? "Sign up with your email instead" : "Sign in with your email instead") : "Use your email instead", showBadgeHelp: s.eventNoMatch !== "expired",
+      eventUseEmail: (ev) => { ev.preventDefault(); this.setState(st => ({ screen: "A1", e: {}, banner: null, eventNoMatch: false, v: { ...st.v, email: st.v.evEmail } })); },
+      submitEvent: (ev) => { ev.preventDefault(); const er = {}; const em = v.evEmail.trim(), b = v.badge.trim(); if (!em) er.evEmail = "Enter the email you registered with."; else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) er.evEmail = "Enter a valid email address, like name@hospital.org."; if (!b) er.badge = "Enter your registration ID."; else if (!/^\d{8}$/.test(b)) er.badge = "Enter the 8-digit registration ID from your confirmation email."; if (Object.keys(er).length) return this.fail(er); this.load(() => this.eventLookup(em, b)); },
+      googleLabel: s.mode === "signup" ? "Sign up with Google" : "Continue with Google",
+      switchPrompt: s.mode === "signup" ? "Already have an account?" : "Don’t have an account?", switchLink: s.mode === "signup" ? "Sign in" : "Sign up",
+      switchMode: (ev) => { ev.preventDefault(); this.setState(st => ({ mode: st.mode === "signup" ? "signin" : "signup", e: {}, banner: null })); },
+      continueLabel: s.loading ? (isEmail ? "Sending code" : "Checking") : "Continue", finishLabel: s.loading ? "Saving" : "Continue", saveLabel: s.loading ? "Saving" : "Finish",
+      chevronOrSpinner: s.loading ? this.spinner("currentColor") : chev, spinnerMuted: this.spinner("var(--stone-400)"),
+      codeNote: s.codeNote, cooldown: s.cooldown, cooling: s.cooldown > 0, canResend: s.cooldown === 0,
+      resend: () => { this.setState(st => ({ codeNote: "A new code was sent.", e: {}, v: { ...st.v, code: "" } })); this.startCooldown(); },
+      countries: D.countries, stateIsSelect, stateIsText: !stateIsSelect, stateLabel: v.country === "Canada" ? "Province" : "State", stateOptions: v.country === "Canada" ? D.caProvinces : D.usStates, statePlaceholder: v.country === "Canada" ? "Select a province" : "Select a state",
+      yesNo: ["Yes", "No"], hcpYes: v.hcp === "Yes", hcpNo: v.hcp === "No", providerTypes, classifications, specializations,
+      clsDisabled: !v.ptype, clsPlaceholder: v.ptype ? "Select a classification" : "Choose a Provider Type first",
+      specDisabled: !v.cls || specNone, specRequired: !specNone, specValue: specNone ? "None" : v.spec, specPlaceholder: v.cls ? "Select a specialization" : "Choose a Classification first", specHelper: specNone ? "This classification has no specializations." : undefined,
+      managementLevels: D.managementLevels, areas: D.areas, practiceSettings: D.practiceSettings,
+      topics: (D.topics || []).map(label => ({ label, checked: v.topic === label, style: radioStyle(v.topic === label), pick: () => this.setV("topic", label), key: (ev) => { if (ev.key === " " || ev.key === "Enter") { ev.preventDefault(); this.setV("topic", label); } } })),
+      doneText: sc === "A3" ? "You’re signed in." : "Account created.", showTitle: !isDone,
+      submitEmail: (ev) => { ev.preventDefault(); const em = v.email.trim(); if (!em) return this.fail({ email: "Enter your email address." }); if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) return this.fail({ email: "Enter a valid email address, like name@hospital.org." }); if (t.eventLogin && this.hasEventMatch(em)) return this.go("E0"); this.load(() => this.go("A2")); },
+      submitCode: (ev) => { ev.preventDefault(); const c = v.code.trim(); if (!c) return this.fail({ code: "Enter the code from your email." }); if (c === "00000000") return this.fail({ code: "This code has expired. Resend a new code to continue." }); if (!/^\d{8}$/.test(c) || c === "11111111") return this.fail({ code: "That code isn’t right. Check the email and try again." }); this.load(() => this.go(s.mode === "signup" || this.isNew(v.email) ? "B3" : "A3")); },
+      submitB3: (ev) => { ev.preventDefault(); const er = {}; if (!v.first.trim()) er.first = "Enter your first name."; if (!v.last.trim()) er.last = "Enter your last name."; if (v.phone && v.phone.replace(/\D/g, "").length < 7) er.phone = "Enter a phone number with at least 7 digits."; if (Object.keys(er).length) return this.fail(er); this.go("B4"); },
+      submitB4: (ev) => { ev.preventDefault(); const er = {}; if (!v.hcp) er.hcp = "Tell us whether you are a licensed healthcare provider."; if (v.hcp === "Yes") { if (!v.ptype) er.ptype = "Select a provider type."; else if (!v.cls) er.cls = "Select a classification."; else if (!specNone && !v.spec) er.spec = "Select a specialization."; } if (v.hcp === "No") { if (!v.mgmt) er.mgmt = "Select a management level."; if (!v.area) er.area = "Select an area of responsibility."; } if (!v.setting) er.setting = "Select a practice setting."; if (Object.keys(er).length) return this.fail(er); this.load(() => this.go("B5")); },
+      submitB5: (ev) => { ev.preventDefault(); const er = {}; if (v.nabp && !/^\d{6}$/.test(v.nabp.trim())) er.nabp = "Enter your 6-digit NABP e-Profile ID."; if (v.dob && !/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])$/.test(v.dob.trim())) er.dob = "Enter your birth month and day as MM/DD."; if (Object.keys(er).length) return this.fail(er); this.load(() => this.go("B6")); }
+    };
+  }
+  reviewVals(t, m) {
+    const tid = t.id, list = this.presetList(tid), cur = this.activePreset(), i = Math.max(0, list.indexOf(cur));
+    const seg = (on) => ({ height: 36, padding: "0 14px", border: "1px solid var(--stone-400)", borderRadius: 6, fontFamily: "var(--font-body)", fontSize: 13, fontWeight: 600, cursor: "pointer", background: on ? "#fff" : "transparent", color: on ? "var(--stone-900)" : "var(--stone-600)", transition: "background-color .15s ease" });
+    const nav = (dis) => ({ height: 36, padding: "0 12px 0 16px", display: "inline-flex", alignItems: "center", gap: 4, border: "1px solid var(--stone-400)", borderRadius: 6, background: "transparent", fontFamily: "var(--font-body)", fontSize: 14, fontWeight: 600, color: dis ? "var(--stone-400)" : "var(--stone-900)", cursor: dis ? "default" : "pointer" });
+    return { isPvtl: tid !== "hmpedu", isEdu: tid === "hmpedu", pvtlStyle: seg(tid !== "hmpedu"), eduStyle: seg(tid === "hmpedu"),
+      pickPvtl: () => this.gotoPreset(/^hmpedu-/.test(cur) ? "signin" : cur, "pvtl365"), pickEdu: () => this.gotoPreset(cur, "hmpedu"),
+      index: i + 1, total: list.length, name: cur, nameStyle: { display: m ? "none" : "inline", marginLeft: 10, color: "var(--stone-600)", fontWeight: 500 },
+      atStart: i === 0, atEnd: i >= list.length - 1, prev: () => this.step(-1), next: () => this.step(1),
+      prevStyle: { ...nav(i === 0), padding: "0 10px" }, nextStyle: nav(i >= list.length - 1) };
+  }
+  openAbout() { this.setState({ about: true }, () => setTimeout(() => this.closeRef.current && this.closeRef.current.focus(), 60)); }
+  closeAbout() { this.setState({ about: false, hc: false }, () => this.tabRef.current && this.tabRef.current.focus()); }
+  lookupNpi() {
+    const n = this.state.v.npi.trim();
+    if (!/^\d{10}$/.test(n)) return this.fail({ npi: "Enter a valid 10-digit NPI number." });
+    this.setState({ npiStatus: "loading" });
+    this.t = setTimeout(() => {
+      if (n.startsWith("9")) return this.setState({ npiStatus: "idle", e: { ...this.state.e, npi: "No match for that NPI. Check the number or enter your details below." } });
+      const TT = "Technologists, Technicians & Other Technical Service Providers";
+      this.setState(st => ({ npiStatus: "found", npiName: "Maya Okafor", e: {}, banner: null, v: { ...st.v, first: "Maya", last: "Okafor", country: "United States", city: "Philadelphia", state: "Pennsylvania", zip: "19103", hcp: "Yes", ptype: TT, cls: "Radiologic Technologist", spec: "Vascular Sonography" } }));
+      setTimeout(() => { const el = document.getElementById("first"); el && el.focus(); }, 30);
+    }, 900);
+  }
+  eventLookup(em, b) {
+    if (b.startsWith("9")) { this.setState({ eventNoMatch: true, e: { badge: "We couldn’t find a match. Check your email and registration ID and try again." }, banner: null }); setTimeout(() => { const el = document.getElementById("badge"); el && el.focus(); }, 30); return; }
+    if (b.startsWith("8")) { this.setState({ eventNoMatch: "expired", e: { badge: "This registration ID has expired. Registration IDs are valid for up to 18 months." }, banner: null }); setTimeout(() => { const el = document.getElementById("badge"); el && el.focus(); }, 30); return; }
+    const TT = "Technologists, Technicians & Other Technical Service Providers";
+    const existing = this.state.mode !== "signup" && !this.isNew(em);
+    if (existing) return this.go("A3");
+    this.setState(st => ({ screen: "B3", event: true, eventName: "SAWC Fall 2026", eventNoMatch: false, e: {}, banner: null, v: { ...st.v, email: em, npi: "1234567893", first: "Maya", last: "Okafor", country: "United States", city: "Philadelphia", state: "Pennsylvania", zip: "19103", phone: "(215) 555-0142", ptWork: true, hcp: "Yes", ptype: TT, cls: "Radiologic Technologist", spec: "Vascular Sonography" } }));
+  }
+  step(d) { const tid = this.theme().id; const list = this.presetList(tid); const i = Math.max(0, list.indexOf(this.activePreset())); const n = i + d; if (n < 0 || n >= list.length) return; this.gotoPreset(list[n], tid); }
+  back() { const sc = this.state.screen; const map = { A2: "A1", E0: "A1", E1: "A1", B3: "A1", B4: "B3", B5: "B4" }; if (map[sc]) this.go(map[sc]); }
+  hasEventMatch(email) { return /event|mercyhealth/i.test(email || ""); }
+  isNew(email) { return /new/i.test(email || ""); }
+  google() { const signup = this.state.mode === "signup"; this.load(() => { if (signup) this.setState(s => ({ screen: "B3", google: true, e: {}, banner: null, v: { ...s.v, email: "maya.okafor@gmail.com", first: "Maya", last: "Okafor" } })); else this.go("A3"); }); }
+}
+</script>
+</body>
+</html>

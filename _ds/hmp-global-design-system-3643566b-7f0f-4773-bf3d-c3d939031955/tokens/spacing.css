@@ -1,0 +1,24 @@
+:root{
+--space-1:0.25rem;  /* 4px */
+--space-2:0.5rem;   /* 8px */
+--space-3:0.75rem;  /* 12px */
+--space-4:1rem;     /* 16px */
+--space-5:1.5rem;   /* 24px */
+--space-6:2rem;     /* 32px */
+--space-7:3rem;     /* 48px */
+--space-8:4rem;     /* 64px */
+--space-9:6rem;     /* 96px */
+
+--radius:0.625rem;
+--radius-sm:calc(var(--radius) * 0.6);
+--radius-md:calc(var(--radius) * 0.8);
+--radius-lg:var(--radius);
+--radius-xl:calc(var(--radius) * 1.4);
+--radius-2xl:calc(var(--radius) * 1.8);
+--radius-full:9999px;
+
+--shadow-xs:0 1px 2px 0 rgb(23 54 82 / 0.05);
+--shadow-sm:0 1px 3px 0 rgb(23 54 82 / 0.08),0 1px 2px -1px rgb(23 54 82 / 0.08);
+--shadow-md:0 4px 6px -1px rgb(23 54 82 / 0.08),0 2px 4px -2px rgb(23 54 82 / 0.08);
+--shadow-lg:0 10px 15px -3px rgb(23 54 82 / 0.08),0 4px 6px -4px rgb(23 54 82 / 0.08);
+}

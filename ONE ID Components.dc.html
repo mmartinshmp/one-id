@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/hmp-global-design-system-3643566b-7f0f-4773-bf3d-c3d939031955/styles.css">
+  <script src="_ds/hmp-global-design-system-3643566b-7f0f-4773-bf3d-c3d939031955/_ds_bundle.js"></script>
+  <script src="oneid-data.js"></script>
+  <style>
+    html, body, * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-smooth: never; }
+    html, body { margin: 0; background: #f7f7f2; }
+    a { color: #1676a3; } a:hover { color: #1a5579; }
+    button:focus-visible, input:focus-visible { outline: 3px solid var(--brand, #891847); outline-offset: 2px; }
+  </style>
+</helmet>
+<div style="max-width:1120px;margin:0 auto;padding:56px 32px 96px;display:flex;flex-direction:column;gap:64px;font-family:var(--font-body);color:var(--stone-900);--brand:#891847;--brand-hover:#6E1339;--brand-tint:#F7EDF1;--brand-ink:#891847;--on-brand:#fff;--primary:#891847;--primary-foreground:#fff;--ring:#891847;--accent:#F7EDF1;--accent-foreground:#891847">
+  <div style="display:flex;flex-direction:column;gap:12px;max-width:720px">
+    <p style="margin:0;font-size:13px;font-weight:600;letter-spacing:0.12em;color:#1676a3">HMP GLOBAL ONE ID</p>
+    <h1 style="margin:0;font-family:var(--font-body);font-weight:600;font-size:44px;line-height:1.05">Components and tokens</h1>
+    <p style="margin:0;font-size:17px;line-height:1.55;color:var(--stone-600)">Everything on the sign-in and sign-up screens is built from the HMP Global design system plus one layer of brand theme tokens. Re-skinning for another brand means swapping the six theme tokens and the logo; nothing else changes.</p>
+  </div>
+
+  <section style="display:flex;flex-direction:column;gap:20px">
+    <h2 style="margin:0;font-family:var(--font-body);font-weight:600;font-size:30px;line-height:1.1">Theme tokens</h2>
+    <p style="margin:0;font-size:16px;color:var(--stone-600);max-width:720px">Set once per brand. Every brand-colored element reads these; nothing references a brand hex directly. Hover is not a token: it is color-mix(in oklab, var(--brand) 80%, black), so no per-brand value is needed. Tint is a 92% white mix for selected rows and highlights.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px">
+      <div style="background:#fff;border:1px solid var(--stone-200);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:center;justify-content:space-between"><img src="assets/pvtl365-logo.svg" alt="PVTL365" style="height:28px"></img><span style="font-size:12px;color:var(--stone-500)">theme = pvtl365</span></div>
+        <div style="display:grid;grid-template-columns:auto 1fr auto;gap:10px 14px;align-items:center;font-size:14px">
+          <span style="width:28px;height:28px;border-radius:6px;background:#891847"></span><span>--brand</span><code style="font-family:var(--font-mono);font-size:13px;color:var(--stone-600)">#891847</code>
+          <span style="width:28px;height:28px;border-radius:6px;background:#F7EDF1;border:1px solid var(--stone-200)"></span><span>--brand-tint</span><code style="font-family:var(--font-mono);font-size:13px;color:var(--stone-600)">#F7EDF1</code>
+          <span style="width:28px;height:28px;border-radius:6px;background:#891847"></span><span>--brand-ink (links, text, focus)</span><code style="font-family:var(--font-mono);font-size:13px;color:var(--stone-600)">#891847 · 9.0:1</code>
+          <span style="width:28px;height:28px;border-radius:6px;background:#fff;border:1px solid var(--stone-200)"></span><span>--on-brand (label on fill)</span><code style="font-family:var(--font-mono);font-size:13px;color:var(--stone-600)">#FFFFFF · 9.0:1</code>
+          <span style="width:28px;height:28px;border-radius:6px;background:#ECF8FE;border:1px solid var(--stone-200)"></span><span>ONE ID tab (fixed, all brands)</span><code style="font-family:var(--font-mono);font-size:13px;color:var(--stone-600)">#ECF8FE</code>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid var(--stone-200);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:center;justify-content:space-between"><img src="assets/hmp-education-logo.svg" alt="HMP Education" style="height:28px"></img><span style="font-size:12px;color:var(--stone-500)">theme = hmpedu</span></div>
+        <div style="display:grid;grid-template-columns:auto 1fr auto;gap:10px 14px;align-items:center;font-size:14px">
+          <span style="width:28px;height:28px;border-radius:6px;background:#173652"></span><span>--brand</span><code style="font-family:var(--font-mono);font-size:13px;color:var(--stone-600)">#173652</code>
+          <span style="width:28px;height:28px;border-radius:6px;background:#E8EBEE;border:1px solid var(--stone-200)"></span><span>--brand-tint</span><code style="font-family:var(--font-mono);font-size:13px;color:var(--stone-600)">#E8EBEE</code>
+          <span style="width:28px;height:28px;border-radius:6px;background:#173652"></span><span>--brand-ink (links, text, focus)</span><code style="font-family:var(--font-mono);font-size:13px;color:var(--stone-600)">#173652 · 12.6:1</code>
+          <span style="width:28px;height:28px;border-radius:6px;background:#fff;border:1px solid var(--stone-200)"></span><span>--on-brand (label on fill)</span><code style="font-family:var(--font-mono);font-size:13px;color:var(--stone-600)">#FFFFFF · 12.6:1</code>
+          <span style="width:28px;height:28px;border-radius:6px;background:#ECF8FE;border:1px solid var(--stone-200)"></span><span>ONE ID tab (fixed, all brands)</span><code style="font-family:var(--font-mono);font-size:13px;color:var(--stone-600)">#ECF8FE</code>
+        </div>
+        <p style="margin:0;font-size:13px;line-height:1.5;color:var(--stone-600)">Dark primary: ink = brand and on-brand = white, same pattern as PVTL365. A brand with a light primary would carry a separate, darker ink shade for text and links.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:20px">
+    <h2 style="margin:0;font-family:var(--font-body);font-weight:600;font-size:30px;line-height:1.1">System tokens used</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px">
+      <div style="background:#fff;border:1px solid var(--stone-200);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:14px">
+        <h3 style="margin:0;font-family:var(--font-body);font-weight:600;font-size:20px">Neutrals and semantic</h3>
+        <div style="display:grid;grid-template-columns:auto 1fr auto;gap:8px 12px;align-items:center;font-size:14px">
+          <span style="width:24px;height:24px;border-radius:6px;background:#f7f7f2;border:1px solid var(--stone-200)"></span><span>Page background (Stone 300)</span><code style="font-family:var(--font-mono);font-size:12px;color:var(--stone-600)">#D6D3D1</code>
+          <span style="width:24px;height:24px;border-radius:6px;background:#fff;border:1px solid var(--stone-200)"></span><span>Card surface</span><code style="font-family:var(--font-mono);font-size:12px;color:var(--stone-600)">#FFFFFF</code>
+          <span style="width:24px;height:24px;border-radius:6px;background:#1c1917"></span><span>Text, labels (Stone 900)</span><code style="font-family:var(--font-mono);font-size:12px;color:var(--stone-600)">#1C1917</code>
+          <span style="width:24px;height:24px;border-radius:6px;background:#57534e"></span><span>Helper, support (Stone 600)</span><code style="font-family:var(--font-mono);font-size:12px;color:var(--stone-600)">#57534E</code>
+          <span style="width:24px;height:24px;border-radius:6px;background:#78716c"></span><span>Placeholder (Stone 500)</span><code style="font-family:var(--font-mono);font-size:12px;color:var(--stone-600)">#78716C</code>
+          <span style="width:24px;height:24px;border-radius:6px;background:#d6d3d1"></span><span>Input border (Stone 400)</span><code style="font-family:var(--font-mono);font-size:12px;color:var(--stone-600)">#A8A29E</code>
+          <span style="width:24px;height:24px;border-radius:6px;background:#e7e5e4"></span><span>Card border, dividers (Stone 200)</span><code style="font-family:var(--font-mono);font-size:12px;color:var(--stone-600)">#E7E5E4</code>
+          <span style="width:24px;height:24px;border-radius:6px;background:#dc2626"></span><span>Error (destructive)</span><code style="font-family:var(--font-mono);font-size:12px;color:var(--stone-600)">#DC2626</code>
+          <span style="width:24px;height:24px;border-radius:6px;background:#15803d"></span><span>Success</span><code style="font-family:var(--font-mono);font-size:12px;color:var(--stone-600)">#15803D</code>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid var(--stone-200);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:14px">
+        <h3 style="margin:0;font-family:var(--font-body);font-weight:600;font-size:20px">Type scale</h3>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font-family:var(--font-body);font-weight:600;font-size:34px;line-height:1.15">Screen title</span><code style="font-family:var(--font-mono);font-size:12px;color:var(--stone-600);text-align:right">Field Gothic 600 · 34/28px</code></div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font-size:16px;color:var(--stone-600)">Supporting copy</span><code style="font-family:var(--font-mono);font-size:12px;color:var(--stone-600)">Elza 400 · 16px / 1.5</code></div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font-size:16px;font-weight:500">Field label</span><code style="font-family:var(--font-mono);font-size:12px;color:var(--stone-600)">Elza 500 · 16px</code></div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font-size:16px;font-weight:500">Field text, dropdown options</span><code style="font-family:var(--font-mono);font-size:12px;color:var(--stone-600)">Elza 500 · 16px</code></div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font-size:16px;font-weight:600">Button label</span><code style="font-family:var(--font-mono);font-size:12px;color:var(--stone-600)">Elza 600 · 16px</code></div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font-size:15px;color:var(--stone-600)">Helper and error text</span><code style="font-family:var(--font-mono);font-size:12px;color:var(--stone-600)">Elza 500 / error 600 · 15px</code></div>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid var(--stone-200);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:14px">
+        <h3 style="margin:0;font-family:var(--font-body);font-weight:600;font-size:20px">Spacing, radii, elevation</h3>
+        <div style="display:grid;grid-template-columns:1fr auto;gap:8px 12px;font-size:14px">
+          <span>Card max width</span><code style="font-family:var(--font-mono);font-size:12px;color:var(--stone-600)">680px</code>
+          <span>Card padding desktop / mobile</span><code style="font-family:var(--font-mono);font-size:12px;color:var(--stone-600)">40px / 20px</code>
+          <span>Gap between fields</span><code style="font-family:var(--font-mono);font-size:12px;color:var(--stone-600)">18px (16 mobile)</code>
+          <span>Label to input / input to helper or error</span><code style="font-family:var(--font-mono);font-size:12px;color:var(--stone-600)">8px / 10px</code>
+          <span>Two-column gutter</span><code style="font-family:var(--font-mono);font-size:12px;color:var(--stone-600)">24px</code>
+          <span>Card radius / field radius / button radius</span><code style="font-family:var(--font-mono);font-size:12px;color:var(--stone-600)">0 / 6px / 8px</code>
+          <span>ONE ID tab radius</span><code style="font-family:var(--font-mono);font-size:12px;color:var(--stone-600)">0 13px 0 10px</code>
+          <span>Card shadow</span><code style="font-family:var(--font-mono);font-size:12px;color:var(--stone-600)">0 24px 64px -16px navy/14%</code>
+          <span>Dropdown shadow</span><code style="font-family:var(--font-mono);font-size:12px;color:var(--stone-600)">--shadow-lg</code>
+          <span>Minimum touch target</span><code style="font-family:var(--font-mono);font-size:12px;color:var(--stone-600)">44 × 44px</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:20px">
+    <h2 style="margin:0;font-family:var(--font-body);font-weight:600;font-size:30px;line-height:1.1">Input</h2>
+    <p style="margin:0;font-size:16px;color:var(--stone-600);max-width:720px">System Input at a 46px height, 16px Elza, 6px radius, 16px side padding. Border Stone 400; focus switches the border to the brand and adds a 3px ring at 50% brand. Error switches the border to the error red and adds an icon-led message under the field. Disabled drops to 50% opacity.</p>
+    <div style="background:#fff;border:1px solid var(--stone-200);border-radius:14px;padding:32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:28px">
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <span style="font-size:12px;font-weight:600;letter-spacing:0.08em;color:var(--stone-500)">DEFAULT</span>
+        <label for="s-default" style="font-weight:500;font-size:16px;display:flex;gap:1px">Email address<span aria-hidden="true" style="color:var(--stone-600);font-weight:400">*</span></label>
+        <div style="--input:var(--stone-400)"><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Input" dc-props="{{ in.default }}" hint-size="100%,46px"></x-import></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <span style="font-size:12px;font-weight:600;letter-spacing:0.08em;color:var(--stone-500)">FOCUS</span>
+        <label for="s-focus" style="font-weight:500;font-size:16px">Email address</label>
+        <div style="--input:var(--brand)"><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Input" dc-props="{{ in.focus }}" hint-size="100%,46px"></x-import></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <span style="font-size:12px;font-weight:600;letter-spacing:0.08em;color:var(--stone-500)">FILLED</span>
+        <label for="s-filled" style="font-weight:500;font-size:16px">Email address</label>
+        <div style="--input:var(--stone-400)"><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Input" dc-props="{{ in.filled }}" hint-size="100%,46px"></x-import></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <span style="font-size:12px;font-weight:600;letter-spacing:0.08em;color:var(--stone-500)">ERROR</span>
+        <label for="s-error" style="font-weight:500;font-size:16px">NPI Number</label>
+        <div style="--input:var(--destructive)"><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Input" dc-props="{{ in.error }}" hint-size="100%,46px"></x-import></div>
+        <div role="alert" style="display:flex;gap:6px;align-items:flex-start;font-size:14px;line-height:1.4;color:var(--destructive);font-weight:500"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg><span>Enter a valid 10-digit NPI number.</span></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;opacity:0.5">
+        <span style="font-size:12px;font-weight:600;letter-spacing:0.08em;color:var(--stone-500)">DISABLED</span>
+        <label for="s-disabled" style="font-weight:500;font-size:16px">Email address</label>
+        <div style="--input:var(--stone-400)"><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Input" dc-props="{{ in.disabled }}" hint-size="100%,46px"></x-import></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:20px">
+    <h2 style="margin:0;font-family:var(--font-body);font-weight:600;font-size:30px;line-height:1.1">Dropdown</h2>
+    <p style="margin:0;font-size:16px;color:var(--stone-600);max-width:720px">Same box as Input with a trailing chevron. Combobox pattern: Arrow keys move, Enter selects, Escape closes, typing jumps. Lists over about 12 items get a search row (type-ahead filters as you type). Options are 44px rows; the selected row is semibold with a Stone 500 check; the highlighted row uses a Stone 100 fill. Dependent dropdowns are disabled with a placeholder naming what to pick first, and reset when their parent changes.</p>
+    <div style="background:#fff;border:1px solid var(--stone-200);border-radius:14px;padding:32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:28px;align-items:start">
+      <dc-import name="OneIdSelect" field-id="d1" label="Closed" options="{{ states }}" selected="" on-change="{{ noop }}" placeholder="Select a state" hint-size="100%,80px"></dc-import>
+      <dc-import name="OneIdSelect" field-id="d2" label="Filled" options="{{ states }}" selected="Pennsylvania" on-change="{{ noop }}" hint-size="100%,80px"></dc-import>
+      <dc-import name="OneIdSelect" field-id="d3" label="Error" required="{{ true }}" options="{{ yesNo }}" selected="" on-change="{{ noop }}" error-text="Tell us whether you are a licensed healthcare provider." placeholder="Select Yes or No" hint-size="100%,80px"></dc-import>
+      <dc-import name="OneIdSelect" field-id="d4" label="Disabled, waiting on parent" required="{{ true }}" options="{{ empty }}" selected="" on-change="{{ noop }}" is-disabled="{{ true }}" placeholder="Choose a Provider Type first" hint-size="100%,80px"></dc-import>
+      <dc-import name="OneIdSelect" field-id="d5" label="No specializations" required="{{ false }}" options="{{ none }}" selected="None" on-change="{{ noop }}" is-disabled="{{ true }}" helper="This classification has no specializations." hint-size="100%,80px"></dc-import>
+      <div style="grid-column:1 / -1;display:flex;flex-direction:column;gap:12px;padding-bottom:300px">
+        <span style="font-size:12px;font-weight:600;letter-spacing:0.08em;color:var(--stone-500)">OPEN, LONG LIST WITH TYPE-AHEAD (click to open)</span>
+        <div style="max-width:420px"><dc-import name="OneIdSelect" field-id="d6" label="Practice Setting" required="{{ true }}" options="{{ settings }}" selected="{{ demoSetting }}" on-change="{{ setDemo }}" searchable="{{ true }}" placeholder="Search or select a setting" hint-size="100%,80px"></dc-import></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:20px">
+    <h2 style="margin:0;font-family:var(--font-body);font-weight:600;font-size:30px;line-height:1.1">Buttons</h2>
+    <p style="margin:0;font-size:16px;color:var(--stone-600);max-width:720px">System Button at 46px, 8px radius, 16px Elza semibold, 24px side padding, minimum width 150px. Primary fills with the brand; on hover the fill becomes color-mix(in oklab, brand 80%, black); label and chevron unchanged. Back is a quiet secondary: Stone 300 outline, Stone 500 label; hover: Stone 100 fill, Stone 700 label, outline unchanged. Loading swaps the trailing chevron for a spinner and disables the button. Buttons stack full-width on mobile, primary on top.</p>
+    <div style="background:#fff;border:1px solid var(--stone-200);border-radius:14px;padding:32px;display:flex;flex-direction:column;gap:28px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:20px;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:12px;font-weight:600;letter-spacing:0.08em;color:var(--stone-500)">PRIMARY</span><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Button" dc-props="{{ bt.primary }}" hint-size="150px,46px">Continue{{ chev }}</x-import></div>
+        <div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:12px;font-weight:600;letter-spacing:0.08em;color:var(--stone-500)">HOVER</span><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Button" dc-props="{{ bt.hover }}" hint-size="150px,46px">Continue{{ chev }}</x-import></div>
+        <div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:12px;font-weight:600;letter-spacing:0.08em;color:var(--stone-500)">LOADING</span><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Button" dc-props="{{ bt.loading }}" hint-size="150px,46px">Sending code{{ spin }}</x-import></div>
+        <div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:12px;font-weight:600;letter-spacing:0.08em;color:var(--stone-500)">DISABLED</span><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Button" dc-props="{{ bt.disabled }}" hint-size="150px,46px">Continue{{ chev }}</x-import></div>
+        <div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:12px;font-weight:600;letter-spacing:0.08em;color:var(--stone-500)">BACK (SECONDARY)</span><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Button" dc-props="{{ bt.back }}" hint-size="120px,46px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>Back</x-import></div>
+        <div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:12px;font-weight:600;letter-spacing:0.08em;color:var(--stone-500)">FOCUS RING</span><div style="display:inline-flex;border-radius:10px;outline:3px solid var(--brand);outline-offset:2px;width:max-content"><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Button" dc-props="{{ bt.primary }}" hint-size="150px,46px">Continue{{ chev }}</x-import></div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;max-width:420px"><span style="font-size:12px;font-weight:600;letter-spacing:0.08em;color:var(--stone-500)">GOOGLE (OPTIONAL)</span><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Button" dc-props="{{ bt.google }}" hint-size="100%,46px"><svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path></svg>Continue with Google</x-import><span style="font-size:13px;color:var(--stone-600)">50px tall, white, 1px #747775 border, #1F1F1F label, official G mark at 20px. Label set in Elza to match the form; swap to Roboto if strict Google branding is required.</span></div>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:20px">
+    <h2 style="margin:0;font-family:var(--font-body);font-weight:600;font-size:30px;line-height:1.1">Checkbox, radio, progress</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px">
+      <div style="background:#fff;border:1px solid var(--stone-200);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:14px">
+        <h3 style="margin:0;font-family:var(--font-body);font-weight:600;font-size:20px">Checkbox</h3>
+        <p style="margin:0;font-size:14px;color:var(--stone-600)">System Checkbox at 20px, 4px radius, brand fill when checked. Label row is 44px tall and clickable. Used for phone type (Home, Work, Mobile; any combination).</p>
+        <div style="display:flex;gap:20px;flex-wrap:wrap">
+          <label style="display:flex;align-items:center;gap:8px;min-height:44px;font-size:15px;--input:var(--stone-400)"><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Checkbox" checked="{{ cb }}" on-change="{{ setCb }}" dc-props="{{ cbp }}" aria-label="Home" hint-size="20px,20px"></x-import>Home</label>
+          <label style="display:flex;align-items:center;gap:8px;min-height:44px;font-size:15px;--input:var(--stone-400)"><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Checkbox" checked="{{ true }}" dc-props="{{ cbp }}" aria-label="Mobile" hint-size="20px,20px"></x-import>Mobile</label>
+          <label style="display:flex;align-items:center;gap:8px;min-height:44px;font-size:15px;opacity:0.5;--input:var(--stone-400)"><x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Checkbox" checked="{{ false }}" disabled="{{ true }}" dc-props="{{ cbp }}" aria-label="Work" hint-size="20px,20px"></x-import>Work</label>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid var(--stone-200);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:14px">
+        <h3 style="margin:0;font-family:var(--font-body);font-weight:600;font-size:20px">Radio</h3>
+        <p style="margin:0;font-size:14px;color:var(--stone-600)">22px circle, 1.5px Stone 400 border; selected: 2px brand border with a 10px brand dot. 44px rows, two columns at desktop, one on mobile. Space or Enter selects.</p>
+        <div style="display:flex;flex-direction:column">
+          <label style="display:flex;align-items:center;gap:12px;min-height:44px;font-size:15px"><span role="radio" aria-checked="false" tabindex="0" style="width:22px;height:22px;border-radius:50%;box-sizing:border-box;border:1.5px solid var(--stone-400);background:#fff;display:inline-flex"></span>Carotid duplex</label>
+          <label style="display:flex;align-items:center;gap:12px;min-height:44px;font-size:15px"><span role="radio" aria-checked="true" tabindex="0" style="width:22px;height:22px;border-radius:50%;box-sizing:border-box;border:2px solid var(--brand);background:#fff;display:inline-flex;align-items:center;justify-content:center"><span style="width:10px;height:10px;border-radius:50%;background:var(--brand)"></span></span>Venous reflux and insufficiency</label>
+          <label style="display:flex;align-items:center;gap:12px;min-height:44px;font-size:15px"><span role="radio" aria-checked="false" tabindex="0" style="width:22px;height:22px;border-radius:50%;box-sizing:border-box;border:1.5px solid var(--stone-400);background:#fff;display:inline-flex;outline:3px solid var(--brand);outline-offset:2px"></span>DVT evaluation (focus)</label>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid var(--stone-200);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:14px">
+        <h3 style="margin:0;font-family:var(--font-body);font-weight:600;font-size:20px">Progress indicator</h3>
+        <p style="margin:0;font-size:14px;color:var(--stone-600)">Shown on the three account-creation steps only. "Step n of 3" in Elza bold brand ink, step name right-aligned in Stone 600, system Progress bar (8px, brand fill on 20% brand).</p>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;justify-content:space-between;font-size:14px"><span style="font-weight:700;color:var(--brand-ink)">Step 2 of 3</span><span style="color:var(--stone-600)">Professional</span></div>
+          <x-import component-from-global-scope="HMPGlobalDesignSystem_364356.Progress" value="{{ pct }}" hint-size="100%,8px"></x-import>
+        </div>
+        <div style="display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13px;color:var(--stone-600)"><span>1</span><span>Profile (Create an Account)</span><span>2</span><span>Professional (Professional Information)</span><span>3</span><span>Preferences</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:20px">
+    <h2 style="margin:0;font-family:var(--font-body);font-weight:600;font-size:30px;line-height:1.1">Messages</h2>
+    <div style="background:#fff;border:1px solid var(--stone-200);border-radius:14px;padding:32px;display:flex;flex-direction:column;gap:20px;max-width:720px">
+      <div role="alert" style="display:flex;gap:10px;align-items:flex-start;padding:14px 16px;border-radius:8px;border:1px solid var(--destructive);background:color-mix(in oklab, var(--destructive) 7%, white);font-size:15px;line-height:1.45"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--destructive)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg><span>Fix the 3 highlighted fields to continue.</span></div>
+      <p style="margin:0;font-size:14px;color:var(--stone-600)">Banner: shown above the form when two or more fields fail on submit, or when the server rejects the request. Focus moves to the first invalid field. Inline errors always accompany it; the banner never replaces them.</p>
+      <div style="display:flex;align-items:center;gap:6px;color:var(--success);font-weight:500;font-size:16px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>A new code was sent.</div>
+      <p style="margin:0;font-size:14px;color:var(--stone-600)">Status: success green with a check, announced politely. Resend then shows "Resend available in 30s" until the cooldown ends.</p>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:20px">
+    <h2 style="margin:0;font-family:var(--font-body);font-weight:600;font-size:30px;line-height:1.1">Accessibility checklist</h2>
+    <div style="background:#fff;border:1px solid var(--stone-200);border-radius:14px;padding:32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px 32px;font-size:15px;line-height:1.5;max-width:960px">
+      <span>Text contrast 4.5:1 or better on every surface; brand ink chosen per theme to pass.</span>
+      <span>Visible 3px brand focus ring on inputs, dropdowns, buttons, links and radios.</span>
+      <span>Every input and dropdown has a visible label tied with for/id or aria-labelledby.</span>
+      <span>Helper and error text linked through aria-describedby; errors use role="alert".</span>
+      <span>Dropdowns are combobox + listbox with full keyboard operation.</span>
+      <span>Errors use an icon plus text, never color alone. Required marked with * and announced via the label.</span>
+      <span>All controls and option rows are at least 44px tall.</span>
+      <span>Reduced-motion users get no spinner or transition animation.</span>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { cb: false, demoSetting: "" };
+  renderVals() {
+    const base = { height: 46, borderRadius: 6, fontSize: 16, fontWeight: 500, padding: "0 16px", width: "100%" };
+    const btn = { height: 46, borderRadius: 8, fontSize: 16, fontWeight: 600, padding: "0 24px", fontFamily: "var(--font-body)", gap: 8, minWidth: 150 };
+    const chev = React.createElement("svg", { key: "c", width: 20, height: 20, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 2.5, strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true" }, React.createElement("polyline", { points: "9 18 15 12 9 6" }));
+    const spin = React.createElement("span", { key: "s", "aria-hidden": "true", style: { width: 18, height: 18, borderRadius: "50%", border: "2.5px solid currentColor", borderTopColor: "transparent", display: "inline-block", flexShrink: 0 } });
+    const D = window.ONEID_DATA || {};
+    return {
+      in: {
+        default: { id: "s-default", placeholder: "name@hospital.org", style: base },
+        focus: { id: "s-focus", placeholder: "name@hospital.org", style: { ...base, boxShadow: "0 0 0 3px color-mix(in oklab, var(--brand) 50%, transparent)" } },
+        filled: { id: "s-filled", defaultValue: "m.okafor@vascularlab.org", style: base },
+        error: { id: "s-error", defaultValue: "12345", "aria-invalid": "true", style: base },
+        disabled: { id: "s-disabled", disabled: true, defaultValue: "maya.okafor@gmail.com", style: { ...base, background: "var(--stone-50)" } }
+      },
+      bt: {
+        primary: { style: { ...btn, padding: "0 16px 0 24px", gap: 6 } },
+        hover: { style: { ...btn, padding: "0 16px 0 24px", gap: 6, background: "color-mix(in oklab, var(--brand) 80%, black)" } },
+        loading: { disabled: true, "aria-busy": "true", style: { ...btn, padding: "0 16px 0 24px", gap: 6 } },
+        disabled: { disabled: true, style: { ...btn, padding: "0 16px 0 24px", gap: 6 } },
+        back: { variant: "outline", style: { ...btn, minWidth: 120, padding: "0 24px 0 16px", gap: 6, color: "var(--stone-500)", borderColor: "var(--stone-300)", background: "#fff" } },
+        google: { variant: "outline", style: { ...btn, height: 50, width: "100%", color: "#1F1F1F", borderColor: "#747775", background: "#fff", gap: 12 } }
+      },
+      chev, spin, pct: 67,
+      cbp: { style: { width: 20, height: 20, borderRadius: 4 } }, cb: this.state.cb, setCb: (v) => this.setState({ cb: v }),
+      states: ["Alabama", "Alaska", "Arizona", "California", "Colorado", "Pennsylvania", "Texas"], yesNo: ["Yes", "No"], empty: [], none: ["None"],
+      settings: D.practiceSettings || ["Hospital", "Private Practice"], demoSetting: this.state.demoSetting, setDemo: (v) => this.setState({ demoSetting: v }), noop: () => {}
+    };
+  }
+}
+</script>
+</body>
+</html>
